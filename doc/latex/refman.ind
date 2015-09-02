@@ -1,0 +1,65 @@
+\begin{theindex}
+
+  \item {clearCache}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{5}
+  \item {com.hp.gloze}, \hyperpage{3}
+  \item {com.hp.gloze.www\_\discretionary {-}{}{}w3\_\discretionary {-}{}{}org\_\discretionary {-}{}{}2001\_\discretionary {-}{}{}XMLSchema}, 
+		\hyperpage{3}
+  \item {com::hp::gloze::Gloze}, \hyperpage{4}
+    \subitem {clearCache}, \hyperpage{5}
+    \subitem {drop}, \hyperpage{7}
+    \subitem {Gloze}, \hyperpage{4}
+    \subitem {initSchema}, \hyperpage{5}
+    \subitem {initSchemaXSI}, \hyperpage{5}
+    \subitem {lift}, \hyperpage{6}
+    \subitem {loadSchema}, \hyperpage{5}
+    \subitem {main}, \hyperpage{7}
+    \subitem {rdf\_\discretionary {-}{}{}to\_\discretionary {-}{}{}xml}, 
+		\hyperpage{6}
+    \subitem {xml\_\discretionary {-}{}{}to\_\discretionary {-}{}{}rdf}, 
+		\hyperpage{5}
+    \subitem {xsd\_\discretionary {-}{}{}to\_\discretionary {-}{}{}owl}, 
+		\hyperpage{6}
+
+  \indexspace
+
+  \item {drop}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{7}
+
+  \indexspace
+
+  \item {Gloze}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{4}
+
+  \indexspace
+
+  \item {initSchema}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{5}
+  \item {initSchemaXSI}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{5}
+
+  \indexspace
+
+  \item {lift}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{6}
+  \item {loadSchema}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{5}
+
+  \indexspace
+
+  \item {main}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{7}
+
+  \indexspace
+
+  \item {rdf\_\discretionary {-}{}{}to\_\discretionary {-}{}{}xml}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{6}
+
+  \indexspace
+
+  \item {xml\_\discretionary {-}{}{}to\_\discretionary {-}{}{}rdf}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{5}
+  \item {xsd\_\discretionary {-}{}{}to\_\discretionary {-}{}{}owl}
+    \subitem {com::hp::gloze::Gloze}, \hyperpage{6}
+
+\end{theindex}

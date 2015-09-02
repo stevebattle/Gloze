@@ -1,0 +1,57 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xlink_:  <http://www.w3.org/1999/xlink#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xlink:   <http://www.w3.org/1999/xlink> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/xlink.owl>
+      a       owl:Ontology .
+
+xlink_:arcrole
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+xlink_:to
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+xlink_:show
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range
+              [ a       owl:DataRange ;
+                owl:oneOf ("new"^^xsd:string "replace"^^xsd:string "embed"^^xsd:string "other"^^xsd:string "none"^^xsd:string)
+              ] .
+
+xlink_:role
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+xlink_:from
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+xlink_:href
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:anyURI .
+
+xlink_:label
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+xlink_:actuate
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range
+              [ a       owl:DataRange ;
+                owl:oneOf ("onLoad"^^xsd:string "onRequest"^^xsd:string "other"^^xsd:string "none"^^xsd:string)
+              ] .
+
+xlink_:type
+      a       rdf:Property , owl:DatatypeProperty .
+
+xlink_:title
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .

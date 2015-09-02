@@ -1,0 +1,43 @@
+<purchaseReport
+  xmlns="http://www.example.com/Report"
+  period="P3M" periodEnding="1999-12-31">
+
+  <regions>
+    <zip code="95819">
+      <part number="872-AA" quantity="1"/>
+      <part number="926-AA" quantity="1"/>
+      <part number="833-AA" quantity="1"/>
+      <part number="455-BX" quantity="1"/>
+    </zip>
+    <zip code="63143">
+      <part number="455-BX" quantity="4"/>
+    </zip>
+  </regions>
+
+  <parts>
+    <part number="872-AA">Lawnmower</part>
+    <part number="926-AA">Baby Monitor</part>
+    <part number="833-AA">Lapis Necklace</part>
+    <part number="455-BX">Sturdy Shelves</part>
+  </parts>
+  
+    <htmlExample xmlns:h="http://www.w3.org/1999/xhtml"
+               h:href="http://www.example.com/reports/4Q99.html">
+    <table xmlns="http://www.w3.org/1999/xhtml"
+           border="0" width="100%">
+      <tr>
+        <th align="left">Zip Code</th>
+        <th align="left">Part Number</th>
+        <th align="left">Quantity</th>
+      </tr>
+      <tr><td>95819</td><td> </td><td> </td></tr>
+      <tr><td> </td><td>872-AA</td><td>1</td></tr>
+      <tr><td> </td><td>926-AA</td><td>1</td></tr>
+      <tr><td> </td><td>833-AA</td><td>1</td></tr>
+      <tr><td> </td><td>455-BX</td><td>1</td></tr>
+      <tr><td>63143</td><td> </td><td> </td></tr>
+      <tr><td> </td><td>455-BX</td><td>4</td></tr>
+    </table>
+  </htmlExample>
+
+</purchaseReport>

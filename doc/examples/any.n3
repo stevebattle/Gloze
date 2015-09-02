@@ -1,0 +1,25 @@
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/any.xml#html>
+      <http://www.w3.org/1999/xhtml#table>
+              [ <http://www.w3.org/1999/xhtml#tr>
+                        [ <http://www.w3.org/1999/xhtml#td>
+                                  [ rdf:value "foo"@en
+                                  ]
+                        ] ;
+                <http://www.w3.org/1999/xhtml#tr>
+                        [ <http://www.w3.org/1999/xhtml#td>
+                                  "bar"
+                        ]
+              ] .
+
+<http://example.org/any.xml>
+      ns2:report
+              [ ns2:part "foo"^^xs_:string , "bar"^^xs_:string ;
+                <http://www.w3.org/1999/xhtml#html>
+                        <http://example.org/any.xml#html>
+              ] .

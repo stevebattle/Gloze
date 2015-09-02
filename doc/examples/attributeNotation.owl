@@ -1,0 +1,46 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://www.iana.org/assignments/media-types/image/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns2:mimeType
+      a       rdf:Property , owl:ObjectProperty .
+
+<http://example.org/attributeNotation.owl>
+      a       owl:Ontology .
+
+ns1:notation
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns2:mimeType
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty rdf:value
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom
+                                  [ a       owl:Class ;
+                                    owl:oneOf (ns1:jpeg ns1:gif ns1:png)
+                                  ] ;
+                          owl:onProperty ns2:mimeType
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:base64Binary ;
+                          owl:onProperty rdf:value
+                        ]
+              ] .
+
+rdf:value
+      a       rdf:Property , owl:DatatypeProperty .

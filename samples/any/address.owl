@@ -1,0 +1,175 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org#> .
+@prefix ipo:     <http://www.example.com/IPO> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ipo_:    <http://www.example.com/IPO#> .
+
+<http://example.org/address.owl>
+      a       owl:Ontology ;
+      rdfs:comment "Addresses for International Purchase order schema Copyright 2000 Example.com. All rights reserved."@en .
+
+ns1:city
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:zip
+      a       rdf:Property , owl:DatatypeProperty .
+
+ipo_:USAddress
+      a       owl:Class ;
+      rdfs:subClassOf ipo_:Address ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:street
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:state
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:name
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:positiveInteger ;
+                owl:onProperty ns1:zip
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:zip
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:city
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:name
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:street
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom ipo_:USState ;
+                owl:onProperty ns1:state
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:city
+              ] .
+
+ns1:name
+      a       rdf:Property , owl:DatatypeProperty .
+
+ipo_:Address
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:street
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:city
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:name
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:city
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:name
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:street
+              ] .
+
+ns1:postcode
+      a       rdf:Property .
+
+ipo_:UKAddress
+      a       owl:Class ;
+      rdfs:subClassOf ipo_:Address ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:name
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:postcode
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:positiveInteger ;
+                owl:onProperty ns1:exportCode
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:street
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty ns1:city
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:city
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty ns1:exportCode
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:street
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty ns1:name
+              ] .
+
+ipo_:USState
+      a       owl:Class ;
+      owl:equivalentClass
+              [ a       owl:DataRange ;
+                owl:oneOf ("AK"^^xsd:string "AL"^^xsd:string "AR"^^xsd:string "PA"^^xsd:string)
+              ] .
+
+ns1:state
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:exportCode
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:street
+      a       rdf:Property , owl:DatatypeProperty .

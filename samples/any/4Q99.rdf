@@ -1,0 +1,502 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:h_="http://www.w3.org/1999/xhtml#"
+    xmlns:r_="http://www.example.com/Report#"
+    xmlns:ipo_="http://www.example.com/IPO#"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:r="http://www.example.com/Report"
+    xmlns:ns1="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ipo="http://www.example.com/IPO"
+    xmlns:ns2="http://example.org#">
+  <rdf:Description rdf:about="">
+    <r_:purchaseReport rdf:parseType="Resource">
+      <r_:htmlExample>
+        <rdf:Seq rdf:nodeID="A0">
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A0"/>
+              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#table"/>
+              <rdf:object>
+                <rdf:Seq rdf:nodeID="A1">
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A2">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A2"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#th"/>
+                              <rdf:object>
+                                <rdf:Description rdf:nodeID="A3">
+                                  <rdf:value>Zip Code</rdf:value>
+                                  <ns2:align>left</ns2:align>
+                                </rdf:Description>
+                              </rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A2"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#th"/>
+                              <rdf:object>
+                                <rdf:Description rdf:nodeID="A4">
+                                  <rdf:value>Part Number</rdf:value>
+                                  <ns2:align>left</ns2:align>
+                                </rdf:Description>
+                              </rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A2"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#th"/>
+                              <rdf:object>
+                                <rdf:Description rdf:nodeID="A5">
+                                  <rdf:value>Quantity</rdf:value>
+                                  <ns2:align>left</ns2:align>
+                                </rdf:Description>
+                              </rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:th rdf:nodeID="A5"/>
+                          <h_:th rdf:nodeID="A4"/>
+                          <h_:th rdf:nodeID="A3"/>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A6">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A6"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>95819</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A6"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A6"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td></h_:td>
+                          <h_:td>95819</h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A7">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A7"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A7"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>872-AA</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A7"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>1</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td>1</h_:td>
+                          <h_:td>872-AA</h_:td>
+                          <h_:td></h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A8">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A8"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A8"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>926-AA</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A8"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>1</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td>1</h_:td>
+                          <h_:td>926-AA</h_:td>
+                          <h_:td></h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A9">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A9"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A9"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>833-AA</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A9"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>1</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td>1</h_:td>
+                          <h_:td>833-AA</h_:td>
+                          <h_:td></h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A10">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A10"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A10"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>455-BX</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A10"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>1</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td>1</h_:td>
+                          <h_:td>455-BX</h_:td>
+                          <h_:td></h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A11">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A11"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>63143</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A11"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A11"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td></h_:td>
+                          <h_:td>63143</h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A1"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A12">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A12"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object></rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A12"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>455-BX</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A12"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>4</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <h_:td>4</h_:td>
+                          <h_:td>455-BX</h_:td>
+                          <h_:td></h_:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <h_:tr rdf:nodeID="A7"/>
+                  <h_:tr rdf:nodeID="A8"/>
+                  <h_:tr rdf:nodeID="A2"/>
+                  <h_:tr rdf:nodeID="A9"/>
+                  <ns2:border>0</ns2:border>
+                  <h_:tr rdf:nodeID="A11"/>
+                  <h_:tr rdf:nodeID="A6"/>
+                  <ns2:width>100%</ns2:width>
+                  <h_:tr rdf:nodeID="A10"/>
+                  <h_:tr rdf:nodeID="A12"/>
+                </rdf:Seq>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <h_:table rdf:nodeID="A1"/>
+          <h_:href>http://www.example.com/reports/4Q99.html</h_:href>
+        </rdf:Seq>
+      </r_:htmlExample>
+      <r_:parts>
+        <rdf:Seq rdf:nodeID="A13">
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A13"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+              <rdf:object>
+                <rdf:Description rdf:nodeID="A14">
+                  <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >872-AA</ns2:number>
+                  <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Lawnmower</rdf:value>
+                </rdf:Description>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A13"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+              <rdf:object>
+                <rdf:Description rdf:nodeID="A15">
+                  <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >926-AA</ns2:number>
+                  <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Baby Monitor</rdf:value>
+                </rdf:Description>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A13"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+              <rdf:object>
+                <rdf:Description rdf:nodeID="A16">
+                  <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >833-AA</ns2:number>
+                  <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Lapis Necklace</rdf:value>
+                </rdf:Description>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A13"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+              <rdf:object>
+                <rdf:Description rdf:nodeID="A17">
+                  <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >455-BX</ns2:number>
+                  <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Sturdy Shelves</rdf:value>
+                </rdf:Description>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <r_:part rdf:nodeID="A14"/>
+          <r_:part rdf:nodeID="A16"/>
+          <r_:part rdf:nodeID="A15"/>
+          <rdf:type rdf:resource="http://www.example.com/Report#PartsType"/>
+          <r_:part rdf:nodeID="A17"/>
+        </rdf:Seq>
+      </r_:parts>
+      <r_:regions>
+        <r_:RegionsType rdf:nodeID="A18">
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A18"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#zip"/>
+              <rdf:object>
+                <rdf:Seq rdf:nodeID="A19">
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A19"/>
+                      <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+                      <rdf:object>
+                        <rdf:Description rdf:nodeID="A20">
+                          <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                          >1</ns2:quantity>
+                          <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >872-AA</ns2:number>
+                        </rdf:Description>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A19"/>
+                      <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+                      <rdf:object>
+                        <rdf:Description rdf:nodeID="A21">
+                          <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                          >1</ns2:quantity>
+                          <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >926-AA</ns2:number>
+                        </rdf:Description>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A19"/>
+                      <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+                      <rdf:object>
+                        <rdf:Description rdf:nodeID="A22">
+                          <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                          >1</ns2:quantity>
+                          <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >833-AA</ns2:number>
+                        </rdf:Description>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A19"/>
+                      <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+                      <rdf:object>
+                        <rdf:Description rdf:nodeID="A23">
+                          <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                          >1</ns2:quantity>
+                          <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >455-BX</ns2:number>
+                        </rdf:Description>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <r_:part rdf:nodeID="A22"/>
+                  <r_:part rdf:nodeID="A21"/>
+                  <ns2:code rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                  >95819</ns2:code>
+                  <r_:part rdf:nodeID="A20"/>
+                  <r_:part rdf:nodeID="A23"/>
+                </rdf:Seq>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:nodeID="A18"/>
+              <rdf:predicate rdf:resource="http://www.example.com/Report#zip"/>
+              <rdf:object>
+                <rdf:Seq rdf:nodeID="A24">
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A24"/>
+                      <rdf:predicate rdf:resource="http://www.example.com/Report#part"/>
+                      <rdf:object>
+                        <rdf:Description rdf:nodeID="A25">
+                          <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                          >4</ns2:quantity>
+                          <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >455-BX</ns2:number>
+                        </rdf:Description>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <r_:part rdf:nodeID="A25"/>
+                  <ns2:code rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+                  >63143</ns2:code>
+                </rdf:Seq>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <r_:zip rdf:nodeID="A24"/>
+          <r_:zip rdf:nodeID="A19"/>
+          <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"/>
+        </r_:RegionsType>
+      </r_:regions>
+      <ns2:periodEnding rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+      >1999-12-31</ns2:periodEnding>
+      <ns2:period rdf:datatype="http://www.w3.org/2001/XMLSchema#duration"
+      >P3M</ns2:period>
+    </r_:purchaseReport>
+  </rdf:Description>
+</rdf:RDF>

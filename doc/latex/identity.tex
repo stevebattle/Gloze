@@ -1,0 +1,115 @@
+XML is not just a tree, but a tree with pointers. An xs:IDREF points to an element with an xs:ID within the same document. An xs:ID identifies the immediately containing element. Typically this is an xs:ID attribute on the element, though it may also be xs:ID simple content.
+
+In RDF we identify the element {\itshape content\/}, by assigning it a URI. This URI is the object of the statement representing the element occurrence.
+
+
+\begin{DoxyItemize}
+\item \hyperlink{attributeid}{attribute identity}
+\item \hyperlink{elementid}{element identity} 
+\end{DoxyItemize}\hypertarget{attributeID}{}\subsection{Attribute Identity}\label{attributeID}
+The following example demonstrates the use of xs:ID, xs:IDREF, and xs:IDREFS. The element 'foobar' includes an 'id' attribute that identifies it. The bar element references it via its 'href' or 'hrefs' attributes, of type xs:IDREF or xs:IDREFS, respectively.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<identity xmlns="http://example.org/" >
+        <foobar id="foobar"/>
+        <bar idref="foobar"/>
+        <bar idrefs="foobar foobar" />
+</identity>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="identity">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="foobar">
+                                        <xs:complexType>
+                                                <xs:attribute name="id" type="xs:
+      ID"/>
+                                        </xs:complexType>
+                                </xs:element>
+                                <xs:element name="bar" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                                <xs:attribute name="idref" type="
+      xs:IDREF"/>
+                                        <xs:attribute name="idrefs" type="xs:IDRE
+      FS"/>
+                                        </xs:complexType>
+                                </xs:element>
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+Observe that no resources of types xs:ID, xs:IDREF, or xs:IDREFS appear in the mapped RDF. These are all translated into resource URIs, and in the case of xs:IDREFS to an RDF:List of URIs.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/attributeID.xml>
+      ns1:identity
+              [ ns1:bar [ ns2:idrefs (<http://example.org/attributeID.xml#foobar>
+       <http://example.org/attributeID.xml#foobar>)
+                        ] ;
+                ns1:bar [ ns2:idref <http://example.org/attributeID.xml#foobar>
+                        ] ;
+                ns1:foobar <http://example.org/attributeID.xml#foobar>
+              ] .
+\end{DoxyCodeInclude}
+ \hypertarget{elementID}{}\subsection{Element Identity}\label{elementID}
+This example includes an element 'foobar' with xs:ID content. This identifies the immediately containing element , 'foobar' itself.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<identity xmlns="http://example.org/">
+        <foo>foobar</foo>
+        <bar>foobar</bar>
+</identity>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" elementFormDefault="qualified">
+        
+        <xs:element name="identity">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="foo" type="xs:ID" />
+                                <xs:element name="bar" type="xs:IDREF" />
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/elementIdentity1.xml>
+      ns2:identity
+              [ ns2:bar <http://example.org/elementIdentity1.xml#foobar> ;
+                ns2:foo <http://example.org/elementIdentity1.xml#foobar>
+              ] .
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,15 @@
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix eg:      <http://example.org/> .
+@prefix xlink_:  <http://www.w3.org/1999/xlink#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xlink:   <http://www.w3.org/1999/xlink> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/linkType.xml>
+      ns1:myLink
+              [ a       eg:SimpleLink ;
+                xlink_:href "http://example.org/foo.xml"^^xs_:anyURI ;
+                xlink_:type "simple"^^xs_:string
+              ] .

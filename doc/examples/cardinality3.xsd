@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://example.org/" xmlns="http://example.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="foo" type="xs:string"/>
+	<xs:element name="bar" type="xs:string"/>
+	<!-- minimum cardinality of 0 for each choice -->
+	<xs:complexType name="Foobar" mixed="true">
+		<xs:sequence maxOccurs="2">
+			<xs:choice maxOccurs="2">
+				<xs:element ref="foo"/>
+				<xs:element ref="bar" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

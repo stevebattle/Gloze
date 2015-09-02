@@ -1,0 +1,4 @@
+<report xmlns="http://example.org/">
+  <part xml:id="foo">foo</part>
+  <part xml:lang="en">bar</part>
+</report>

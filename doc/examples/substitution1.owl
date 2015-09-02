@@ -1,0 +1,20 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:bar
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string ;
+      rdfs:subPropertyOf ns1:foo .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+<http://example.org/substitution1.owl>
+      a       owl:Ontology .

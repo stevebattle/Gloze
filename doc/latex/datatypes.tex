@@ -1,0 +1,487 @@
+The RDF semantics recommendation identifies a subset of XML schema datatypes that are suitable for use in RDF. The following XML datatypes may be used in RDF typed literals. For example, an xs:string \char`\"{}foobar\char`\"{}, would be represented in RDF (N3) as \char`\"{}foobar\char`\"{}$^\wedge$$^\wedge$$<$\href{http://www.w3.org/2001/XMLSchema#string}{\tt http://www.w3.org/2001/XMLSchema\#string}$>$.
+
+
+\begin{DoxyItemize}
+\item xs:string
+\item xs:boolean
+\item xs:decimal
+\item xs:float
+\item xs:double
+\item xs:dateTime
+\item xs:time
+\item xs:date
+\item xs:gYearMonth
+\item xs:gYear
+\item xs:gMonthDay
+\item xs:gDay
+\item xs:gMonth
+\item xs:hexBinary
+\item xs:base64Binary
+\item xs:anyURI
+\item xs:normalizedString
+\item xs:token
+\item xs:language
+\item xs:NMTOKEN
+\item xs:Name
+\item xs:NCName
+\item xs:integer
+\item xs:nonPositiveInteger
+\item xs:negativeInteger
+\item xs:long
+\item xs:int
+\item xs:short
+\item xs:byte
+\item xs:nonNegativeInteger
+\item xs:unsignedLong
+\item xs:unsignedInt
+\item xs:unsignedShort
+\item xs:unsignedByte
+\item xs:positiveInteger
+\end{DoxyItemize}
+
+\hyperlink{elementstring}{datatype example}
+
+The exceptions include:
+\begin{DoxyItemize}
+\item xs:anySimpleType
+\item xs:duration
+\item xs:ENTITY
+\item xs:ENTITIES
+\item xs:ID
+\item xs:IDREF
+\item xs:IDREFS
+\item xs:NMTOKENS
+\item xs:NOTATION
+\item xs:QName
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/TR/2004/REC-rdf-mt-20040210/}{\tt http://www.w3.org/TR/2004/REC-\/rdf-\/mt-\/20040210/} \href{http://www.w3.org/TR/xpath-functions/}{\tt http://www.w3.org/TR/xpath-\/functions/} \href{http://www.w3.org/TR/swbp-xsch-datatypes/}{\tt http://www.w3.org/TR/swbp-\/xsch-\/datatypes/}
+\end{DoxySeeAlso}
+The following sections explore work-\/arounds for all of these datatypes.\hypertarget{datatypes_anySimpleType}{}\subsection{The mother of all simple types (xs:anySimpleType)}\label{datatypes_anySimpleType}
+This type is the base of all simple types with an unconstrained lexical space. User defined restrictions of xs:anySimpleType are not allowed. Indeed, users are generally advised to steer clear of it altogether.
+
+Yet, both elements and attributes may be defined to be of type xs:anySimpleType (it's also the default type for attributes). Also, anySimpleType may be used as the base of a simpleContent extension.
+
+Thinking about an RDF savvy mapping, it occupies a similar place in the pantheon of classes as rdfs:Literal, the superclass of all literals including datatypes. Thus any XML content of type xs:anySimpleType is mapped to an rdfs:Literal.
+
+\hyperlink{attributeanysimpletype}{anySimpleType example}
+
+\begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/2001/05/xmlschema-rec-comments#pfiS4SanySimpleType}{\tt http://www.w3.org/2001/05/xmlschema-\/rec-\/comments\#pfiS4SanySimpleType} \href{http://lists.w3.org/Archives/Member/w3c-xml-schema-ig/2002Jan/0065.html}{\tt http://lists.w3.org/Archives/Member/w3c-\/xml-\/schema-\/ig/2002Jan/0065.html}
+\end{DoxySeeAlso}
+\hypertarget{datatypes_duration}{}\subsection{Duration (xs:duration)}\label{datatypes_duration}
+The problem with xs:duration is that there's no well-\/defined total ordering over it's value space (durations are partially ordered). The problem stems from there being an indeterminate number of days in a month. The recommended solution used by \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} is to distill a single period such as \char`\"{}P7Y2M26DT14H18M10S\char`\"{} (years, months, days, hours, minutes, seconds) into separate xs:yearMonthDuration \char`\"{}P7Y2M\char`\"{} (years, months) and xs:dayTimeDuration \char`\"{}P26DT14H18M10S\char`\"{} (days, hours, minutes, seconds) datatypes. The reverse process, is equivalent to adding the these values, both of which are subclasses of duration. When adding two durations, each component is added independently, ignoring -\/ in particular -\/ any carry from days to months.
+
+\hyperlink{elementduration}{duration example}\hypertarget{datatypes_entity}{}\subsection{Entities (xs:ENTITY)}\label{datatypes_entity}
+An XML schema ENTITY allows the substitution of common text values or balanced mark-\/up defined as XML entities. ENTITY values must match an entity name declared in the DTD of the instance document. The value space of unexpanded entities is scoped to the instance document it appears in. For the XML to RDF mapping, internally defined entities are therefore expanded. As they may include balanced mark-\/up, an expanded entity can be described as an RDF XMLLiteral. There is currently no reverse mapping due to technical issues in editing document type declarations in level 2 DOM.
+
+\hyperlink{elemententity}{entity example}
+
+\begin{DoxySeeAlso}{See also}
+\href{http://jena.sourceforge.net/how-to/typedLiterals.html#xsd}{\tt http://jena.sourceforge.net/how-\/to/typedLiterals.html\#xsd}
+\end{DoxySeeAlso}
+\hypertarget{datatypes_xsid}{}\subsection{Identity datatypes (xs:ID, xs:IDREF)}\label{datatypes_xsid}
+An element is considered to have an ID if it has an attribute of type ID, or if the type of the element itself is an ID.
+
+IDs have no distinguishing features looking at the XML alone, they look like ordinary content. We look to the XML schema which will identify the datatype as xml schema ID. The ID is associated with the enclosing element, and that element can have at most one ID.
+
+XML IDs are defined to have document scope, such that a given ID must be unique within a single document and that each ID reference should have a corresponding ID within the same document. One advantage of the mapping into RDF is that a single RDF model may contain descriptions of multiple documents. We have ensure that we preserve the global uniqueness of identifiers, and do not lose the correlation between IDs and their references when moving to this global context. An identifier of type ID can be transformed into a URI by treating it as a fragment identifier relative to the document base.
+
+For example, a base {\ttfamily \href{http://example.org/base}{\tt http://example.org/base}} an XML ID \char`\"{}foobar\char`\"{} combine to give the URI, {\ttfamily \href{http://example.org/base#foobar}{\tt http://example.org/base\#foobar}} .
+
+Properties of type ID will disappear, as these simply define the URI of the identified resource. A corresponding reference to this resource with an IDREF is similarly expanded into a URI reference.
+
+\hyperlink{elementidentity}{identity example}\hypertarget{datatypes_notation}{}\subsection{Notation (xs:NOTATION)}\label{datatypes_notation}
+NOTATIONs are restricted to QNames declared in the schema. For the purposes of RDF mapping they are subject to the same rules as QNames. The target namespace and notation name are expanded to give an absolute URI for the notation resource.
+
+\hyperlink{attributenotation}{notation example}\hypertarget{datatypes_qNames}{}\subsection{Qualified Names (xs:QName)}\label{datatypes_qNames}
+QNames define the space of (optionally) qualified local names. The scope of an XML namespace prefix includes the element it is defined in and its children (subject to shadowing). This lexical scoping doesn't translate directly into RDF where everything has global scope. However, the expanded QName is a URI, so it may be translated into an object reference, though typically we have no knowledge of the type of object referred to. This URI becomes associated with a resource.
+
+For example, given a namespace prefix 'eg' defined as \char`\"{}http://example.org\char`\"{} the QName \char`\"{}eg:foobar\char`\"{} would be expanded to give the URI, {\ttfamily \href{http://example.org#foobar}{\tt http://example.org\#foobar}} .
+
+\hyperlink{elementqname}{QName example}\hypertarget{datatypes_listTypes}{}\subsection{List types (xs:IDREFS, xs:ENTITIES, xs:NMTOKENS)}\label{datatypes_listTypes}
+Although list types are treated as simple in XML schema, they are not recommended for use in RDF. Instead, we construct an rdf:list of the corresponding non-\/list type (xs:IDREF, xs:ENTITY, xs:NMTOKEN).
+
+\hyperlink{elementidrefs}{IDREFS example} \hypertarget{elementString}{}\subsection{Datatype example xs:string}\label{elementString}
+The 'string' element contains an xs:string \char`\"{}foobar\char`\"{} as its content.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<string xmlns="http://example.org/">foobar</string>
+\end{DoxyCodeInclude}
+
+
+This is defined in its schema.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:element name="string" type="xs:string" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The N3 translation declares a namespace prefix 'xs\_\-' that allows the full URI $<$\href{http://www.w3.org/2001/XMLSchema#string}{\tt http://www.w3.org/2001/XMLSchema\#string}$>$ to be abbreviated to xs\_\-:string. Note that the RDF mapping preserves namespaces declared in the XML (so they can be recovered in the reverse mapping), the namespace 'xs' defined as $<$\href{http://www.w3.org/2001/XMLSchema}{\tt http://www.w3.org/2001/XMLSchema}$>$ is already taken, so \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} defines an {\itshape extended\/} version with a trailing '\#' and adds the underscore to the name. The XML base is \href{http://example.org/}{\tt http://example.org/}
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/elementString.xml>
+      ns2:string "foobar"^^xs_:string .
+\end{DoxyCodeInclude}
+ \hypertarget{attributeAnySimpleType}{}\subsection{Example: xs:anySimpleType}\label{attributeAnySimpleType}
+This example shows how an untyped attribute 'bar' has a default type of xs:anySimpleType. All simple types are derived from this, so it occupies a similar place to rdfs:Literal.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >   
+        <xs:element name="foo">
+                <xs:complexType>
+                        <xs:attribute name="bar"/>
+                </xs:complexType>       
+        </xs:element>
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+An XMl instance of this schema is as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0"?>
+<foo xmlns="http://example.org/" bar="foobar"/>
+\end{DoxyCodeInclude}
+
+
+The value 'foobar' is mapped to a literal of type rdfs:Literal.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/attributeAnySimpleType.xml>
+      ns2:foo [ ns1:bar "foobar"
+              ] .
+\end{DoxyCodeInclude}
+ \hypertarget{elementDuration}{}\subsection{Example xs:duration}\label{elementDuration}
+The duration \char`\"{}P2M26DT14H18M\char`\"{} is split into two separate values \char`\"{}P2M\char`\"{} and \char`\"{}P26DT14H18M\char`\"{}. Notice the missing year and seconds components, any component is optional. Whereas the value space of duration is partially ordered, the spaces of these year/month and day/time types are totally ordered.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<duration xmlns="http://example.org/">P2M26DT14H18M</duration>
+\end{DoxyCodeInclude}
+
+
+The xml schema for this is as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:element name="duration" type="xs:duration" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The object of the 'duration' statement is now a bnode with a pair of rdf:values, representing the two components of the original duration. These values may be distinguished by their type. The base is \href{http://example.org/base.}{\tt http://example.org/base.}
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/elementDuration.xml>
+      ns2:duration
+              [ rdf:value "P2M"^^xs_:yearMonthDuration , "P26DT14H18M"^^xs_:dayTi
+      meDuration
+              ] .
+\end{DoxyCodeInclude}
+
+
+Mapping back to XML, we make use of the fact that these year/month and day/time types are sub-\/classes of duration. Durations are added component-\/wise, so we needn't be concerned with (indeterminate) carry from days to months. \hypertarget{elementENTITY}{}\subsection{Example xs:ENTITY}\label{elementENTITY}
+Entities allow common blocks of text to be substituted in place, reducing duplication and errors. Entities are not just any plain text, but may also contain {\itshape balanced\/} markup. This fits the bill of the rdf:XMLLiteral datatype. Entity references are usually identified by surrounding them with '\&' and ';', allowing the XML parser to expand them, but this is not required for the schema entity type.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:element name="entity" type="xs:ENTITY" />   
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+An XML instance that defines and uses an entity 'eg' is as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0"?>
+<!DOCTYPE example [
+        <!ELEMENT entity (#PCDATA)>
+        <!ATTLIST entity xmlns CDATA #IMPLIED xmlns:xsi CDATA #IMPLIED xsi:schema
+      Location CDATA #IMPLIED>
+        <!ENTITY eg "http://example.com/">
+]>
+<entity xmlns="http://example.org/">eg</entity>
+\end{DoxyCodeInclude}
+
+
+The rdf:XMLLiteral type is used in conjunction with the 'Literal' parseType of the rdf/xml serialization. The base is \href{http://example.org/base.}{\tt http://example.org/base.}
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="windows-1252"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns1="http://example.org/def/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns2="http://example.org/"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#">
+  <rdf:Description rdf:about="">
+    <ns2:entity rdf:parseType="Literal">http://example.com/</ns2:entity>
+  </rdf:Description>
+</rdf:RDF>
+\end{DoxyCodeInclude}
+ \hypertarget{elementIdentity}{}\subsection{Example xs:ID, xs:IDREF}\label{elementIdentity}
+The xs:ID and xs:IDREF types have document scope so are not recommended for use in RDF. Take a fragment of XML with an attribute 'id' of type xs:ID. Instead of adding the 'id' attribute as a property of a resource, we use it to derive the URI of that resource. Given a base {\ttfamily \href{http://example.org/base}{\tt http://example.org/base}} the RDF mapping below includes a statement with property 'foo' and object {\ttfamily \href{http://example.org/base#foobar}{\tt http://example.org/base\#foobar}}. The 'bar' element is an IDREF, and the object of this statement is the resource identified as 'foobar'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<identity xmlns="http://example.org/">
+        <foo id="foobar" />
+        <bar>foobar</bar>
+</identity>
+\end{DoxyCodeInclude}
+
+
+The xml schema for this is as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" elementFormDefault="qualified">
+        
+        <xs:element name="identity">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="foo">
+                                        <xs:complexType>
+                                                <xs:simpleContent>
+                                                        <xs:extension base="xs:an
+      ySimpleType">
+                                                                <xs:attribute nam
+      e="id" type="xs:ID" />
+                                                        </xs:extension>
+                                                </xs:simpleContent>
+                                        </xs:complexType>
+                                </xs:element>
+                                <xs:element name="bar" type="xs:IDREF" />
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+This XML maps to the following RDF. Note how the 'id' attribute has been dropped in the RDF.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/elementIdentity.xml>
+      ns2:identity
+              [ ns2:bar <http://example.org/elementIdentity.xml#foobar> ;
+                ns2:foo <http://example.org/elementIdentity.xml#foobar>
+              ] .
+\end{DoxyCodeInclude}
+ \hypertarget{attributeNotation}{}\subsection{Example: xs:NOTATION}\label{attributeNotation}
+This example demonstrates the use of notations. These are essentially QNames which must be expanded to give them global scope. The only restriction is that any notation should be predefined in the schema. The example includes a base64Binary embedded image which is notated as belonging to a particular predefined mime type.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0"?>
+<!-- example adapted from http://www.w3.org/TR/2004/WD-xml-media-types-20041102/ 
+      -->
+<notation xmlns="http://www.iana.org/assignments/media-types/image/" 
+        mimeType="png">/aWKKapGGyQ=</notation>
+\end{DoxyCodeInclude}
+
+
+The xml schema defines the mime options is as follows. The only mime type options available are 'jpeg', 'gif' and 'png'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.iana.org/assignments/media-types/image/" 
+        xmlns="http://www.iana.org/assignments/media-types/image/">
+                
+        <xs:notation name="jpeg" public="image/jpeg"/>
+        <xs:notation name="gif" public="image/gif" />
+        <xs:notation name="png" public="image/png" />
+        
+        <xs:element name="notation">
+                <xs:complexType>
+                        <xs:complexContent>
+                                <xs:extension base="xs:base64Binary">
+                                        <xs:attribute name="mimeType">
+                                                <xs:simpleType >
+                                                        <xs:restriction base="xs:
+      NOTATION">
+                                                                <xs:enumeration v
+      alue="jpeg"/>
+                                                                <xs:enumeration v
+      alue="gif"/>
+                                                                <xs:enumeration v
+      alue="png"/>
+                                                        </xs:restriction>
+                                                </xs:simpleType>
+                                        </xs:attribute>
+                                </xs:extension>
+                        </xs:complexContent>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+In the resulting RDF mapping, the xs:NOTATION datatype does not appear, but the expanded QName names the global mime type resource.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://www.iana.org/assignments/media-types/image/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/attributeNotation.xml>
+      ns1:notation
+              [ rdf:value "/aWKKapGGyQ="^^xs_:base64Binary ;
+                ns2:mimeType ns1:png
+              ] .
+\end{DoxyCodeInclude}
+\hypertarget{attributenotation_attributeChildren}{}\subsubsection{Child components}\label{attributenotation_attributeChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{annotation}{annotation}
+\item \hyperlink{simpletype}{simpleType}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{simplecontent}{simpleContent} 
+\end{DoxyItemize}\hypertarget{elementQName}{}\subsection{Example xs:QName}\label{elementQName}
+This example defines a qname 'eg:foobar', with a prefix 'eg' defined as \href{http://example.com#.}{\tt http://example.com\#.}
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<qname xmlns="http://example.org/" xmlns:eg="http://example.com#">eg:foobar</qnam
+      e>
+\end{DoxyCodeInclude}
+
+
+The corresponding xml schema is as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+        <xs:element name="qname" type="xs:QName" />     
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The resulting RDF shows that the offending QName type has been dropped, and the expanded URI is a resource name.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix eg:      <http://example.com#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/elementQName.xml>
+      ns2:qname eg:foobar .
+\end{DoxyCodeInclude}
+ \hypertarget{elementIDREFS}{}\subsection{Example xs:IDREFS}\label{elementIDREFS}
+In this example we define an element 'foo' whose content type is an xs:ID so the foo element itself is implicated in the naming. The 'bar' element is of type xs:IDREFS; a list of IDREFs. The IDREF type is not used directly as a datatype (because this has document scope), but becomes a global resource URI.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" elementFormDefault="qualified">
+        
+        <xs:element name="list">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="foo" type="xs:ID" />
+                                <xs:element name="bar" type="xs:IDREFS" />
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The 'bar' element refers twice to the same ID. 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<list xmlns="http://example.org/">
+        <foo>foobar</foo>
+        <bar>foobar foobar</bar>
+</list>
+\end{DoxyCodeInclude}
+
+
+In N3 the content of an RDF list is contained in brackets. 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/elementIDREFS.xml>
+      ns2:list
+              [ ns2:bar (<http://example.org/elementIDREFS.xml#foobar> <http://ex
+      ample.org/elementIDREFS.xml#foobar>) ;
+                ns2:foo <http://example.org/elementIDREFS.xml#foobar>
+              ] .
+\end{DoxyCodeInclude}
+ 

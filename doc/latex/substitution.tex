@@ -1,0 +1,39 @@
+There is a hierarchy among elements defined by substitution groups. These substitution groups define sub-\/property relationships between properties. A substitution group is defined by a head element, and member elements that substitute for the head. The property corresponding to the member is a sub-\/property of that corresponding to the head.
+
+In the example below, the {\itshape head\/} element 'foo' defines the substitution group, of which element 'bar' is a member. This means that in the XML instance, 'bar' may be subsituted for 'foo'. Logically, any RDF statement of 'bar' implies a corresponding statement of 'foo'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/" >
+        
+        <xs:element name="foo" type="xs:string" />      
+        <xs:element name="bar" substitutionGroup="foo" type="xs:string" />
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:bar
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string ;
+      rdfs:subPropertyOf ns1:foo .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+
+<http://example.org/substitution1.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+ 

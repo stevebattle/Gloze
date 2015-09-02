@@ -1,0 +1,41 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org#> .
+@prefix xsd_:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ns1:currency
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:value
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:internationalPrice
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:currency
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:value
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:string ;
+                          owl:onProperty ns1:currency
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:decimal ;
+                          owl:onProperty ns1:value
+                        ]
+              ] .
+
+<http://example.org>
+      a       owl:Ontology .

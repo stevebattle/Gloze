@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/"
+	elementFormDefault="qualified">
+	
+	<xs:element name="data">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:enumeration value="0"/>
+				<xs:enumeration value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="objects">
+		<xs:simpleType>
+			<xs:restriction base="xs:QName">
+				<xs:enumeration value="foo"/>
+				<xs:enumeration value="bar"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+</xs:schema>

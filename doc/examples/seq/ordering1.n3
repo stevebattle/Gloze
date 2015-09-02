@@ -1,0 +1,27 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+_:b1  a       rdf:Seq ;
+      rdf:_1  [ a       rdf:Statement ;
+                rdf:object "foobar"^^xs_:string ;
+                rdf:predicate ns1:foo ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_2  [ a       rdf:Statement ;
+                rdf:object "foobar"^^xs_:string ;
+                rdf:predicate ns1:bar ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_3  [ a       rdf:Statement ;
+                rdf:object "foobar"^^xs_:string ;
+                rdf:predicate ns1:bar ;
+                rdf:subject _:b1
+              ] ;
+      ns1:bar "foobar"^^xs_:string ;
+      ns1:foo "foobar"^^xs_:string .
+
+<http://example.org/ordering1.xml>
+      ns1:foobar _:b1 .

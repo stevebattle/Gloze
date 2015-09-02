@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ns1="http://example.org#">
+  <rdf:Description rdf:about="">
+    <ns1:internationalPrice rdf:parseType="Resource">
+      <ns1:value rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+      >423.46</ns1:value>
+      <ns1:currency rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >EUR</ns1:currency>
+    </ns1:internationalPrice>
+  </rdf:Description>
+</rdf:RDF>

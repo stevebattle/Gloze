@@ -1,0 +1,21 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/cardinality2a.xml>
+      ns1:foofoo _:b1 .
+
+_:b1  a       rdf:Seq ;
+      rdf:_1  [ a       rdf:Statement ;
+                rdf:object "foo"^^xs_:string ;
+                rdf:predicate ns1:foo ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_2  [ a       rdf:Statement ;
+                rdf:object "foo"^^xs_:string ;
+                rdf:predicate ns1:foo ;
+                rdf:subject _:b1
+              ] ;
+      ns1:foo "foo"^^xs_:string .

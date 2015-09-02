@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ipo_="http://www.example.com/IPO#"
+    xmlns:ns1="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ipo="http://www.example.com/IPO"
+    xmlns:ns2="http://example.org#">
+  <rdf:Description rdf:about="">
+    <ipo_:purchaseOrder>
+      <ipo_:PurchaseOrderType>
+        <ns2:items>
+          <ipo_:Items>
+            <ns2:item rdf:parseType="Resource">
+              <ns2:shipDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1999-12-05</ns2:shipDate>
+              <ipo_:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Want this for the holidays</ipo_:comment>
+              <ns2:USPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+              >99.95</ns2:USPrice>
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns2:quantity>
+              <ns2:productName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Lapis necklace</ns2:productName>
+              <ns2:partNum rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >833-AA</ns2:partNum>
+            </ns2:item>
+          </ipo_:Items>
+        </ns2:items>
+        <ns2:shipTo>
+          <ipo_:UKAddress>
+            <ns2:exportCode rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+            >1</ns2:exportCode>
+            <ns2:postcode>CB1 1JR</ns2:postcode>
+            <ns2:country rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >United Kingdom</ns2:country>
+            <ns2:city rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Cambridge</ns2:city>
+            <ns2:street rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >47 Eden Street</ns2:street>
+            <ns2:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Helen Zoe</ns2:name>
+          </ipo_:UKAddress>
+        </ns2:shipTo>
+        <ns2:orderDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >1999-12-01</ns2:orderDate>
+      </ipo_:PurchaseOrderType>
+    </ipo_:purchaseOrder>
+  </rdf:Description>
+</rdf:RDF>

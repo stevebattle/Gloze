@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns2="http://example.org/def/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ns1="http://example.org/"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://example.org/redefined.owl">
+  <owl:Class rdf:about="Bar"/>
+</rdf:RDF>

@@ -1,0 +1,82 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xsd_:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ns1:salutation
+      a       rdf:Property , owl:ObjectProperty .
+
+ns1:name
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:quantity
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:shipDate
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:productName
+      a       rdf:Property , owl:DatatypeProperty .
+
+<http://example.org/mix.owl>
+      a       owl:Ontology .
+
+ns1:letterBody
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:quantity
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:shipDate
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:positiveInteger ;
+                          owl:onProperty ns1:quantity
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:productName
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:salutation
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom
+                                  [ a       owl:Class ;
+                                    rdfs:subClassOf
+                                            [ a       owl:Restriction ;
+                                              owl:cardinality "1"^^xsd:int ;
+                                              owl:onProperty ns1:name
+                                            ] ;
+                                    rdfs:subClassOf
+                                            [ a       owl:Restriction ;
+                                              owl:allValuesFrom xsd:string ;
+                                              owl:onProperty ns1:name
+                                            ]
+                                  ] ;
+                          owl:onProperty ns1:salutation
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:string ;
+                          owl:onProperty ns1:productName
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:date ;
+                          owl:onProperty ns1:shipDate
+                        ]
+              ] .

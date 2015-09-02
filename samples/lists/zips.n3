@@ -1,0 +1,9 @@
+@prefix ns1:     <http://example.org#> .
+@prefix xsd_:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/zips>
+      ns1:lists
+              [ ns1:zips (95630 95977 95945) , "AK"^^xsd_:string , "CA"^^xsd_:string
+              ] .

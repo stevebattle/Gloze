@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://tempuri.org/po.xsd#"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ns2="http://example.org#">
+  <rdf:Description rdf:about="">
+    <ns1:purchaseOrder>
+      <ns1:PurchaseOrderType>
+        <ns1:items>
+          <ns1:Items>
+            <ns1:item rdf:parseType="Resource">
+              <ns1:shipDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1999-05-21</ns1:shipDate>
+              <ns1:USPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+              >39.98</ns1:USPrice>
+              <ns1:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns1:quantity>
+              <ns1:productName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Baby Monitor</ns1:productName>
+              <ns2:weightKg rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+              >1.0</ns2:weightKg>
+              <ns2:partNum rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >926-AA</ns2:partNum>
+            </ns1:item>
+            <ns1:item rdf:parseType="Resource">
+              <ns1:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Confirm this is electric</ns1:comment>
+              <ns1:USPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+              >148.95</ns1:USPrice>
+              <ns1:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns1:quantity>
+              <ns1:productName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Lawnmower</ns1:productName>
+              <ns2:shipBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >land</ns2:shipBy>
+              <ns2:weightKg rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+              >1000</ns2:weightKg>
+              <ns2:partNum rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >872-AA</ns2:partNum>
+            </ns1:item>
+          </ns1:Items>
+        </ns1:items>
+        <ns1:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Hurry, my lawn is going wild!</ns1:comment>
+        <ns1:billTo>
+          <ns1:USAddress>
+            <ns1:zip rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+            >95819</ns1:zip>
+            <ns1:state rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >PA</ns1:state>
+            <ns1:city rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Old Town</ns1:city>
+            <ns1:street rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >8 Oak Avenue</ns1:street>
+            <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Robert Smith</ns1:name>
+            <ns2:country rdf:datatype="http://www.w3.org/2001/XMLSchema#NMTOKEN"
+            >US</ns2:country>
+          </ns1:USAddress>
+        </ns1:billTo>
+        <ns1:shipTo>
+          <ns1:USAddress>
+            <ns1:zip rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+            >90952</ns1:zip>
+            <ns1:state rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >CA</ns1:state>
+            <ns1:city rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Mill Valley</ns1:city>
+            <ns1:street rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >123 Maple Street</ns1:street>
+            <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Alice Smith</ns1:name>
+            <ns2:country rdf:datatype="http://www.w3.org/2001/XMLSchema#NMTOKEN"
+            >US</ns2:country>
+          </ns1:USAddress>
+        </ns1:shipTo>
+        <ns2:orderDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >1999-10-20</ns2:orderDate>
+      </ns1:PurchaseOrderType>
+    </ns1:purchaseOrder>
+  </rdf:Description>
+</rdf:RDF>

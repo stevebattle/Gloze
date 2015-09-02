@@ -1,0 +1,55 @@
+XML differentiates between empty and null data. Such {\itshape nillable\/} elements can be described in the XML schema.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:element name="foobar" type="xs:String" nillable="true"/>
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+An example of a nil element is shown in the example below. A null value is represented in RDF using rdf:nil, the empty list.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foobar xmlns="http://example.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-i
+      nstance" 
+ xsi:nil="true"/>
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/nil.xml>
+      ns2:foobar () .
+\end{DoxyCodeInclude}
+
+
+Compare this with the same element simply left empty.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foobar xmlns="http://example.org/" />
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/nil1.xml>
+      ns2:foobar "" .
+\end{DoxyCodeInclude}
+ 

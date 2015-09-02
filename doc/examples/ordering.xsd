@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/" elementFormDefault="qualified">
+
+	<xs:element name="foobar">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="foo" type="xs:string" minOccurs="0" />
+				<xs:choice>
+					<xs:element name="bar" type="xs:string"/>
+					<xs:element name="baz" type="xs:string"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

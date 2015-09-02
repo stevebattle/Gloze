@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE example [
+	<!ELEMENT entity (#PCDATA)>
+	<!ATTLIST entity xmlns CDATA #IMPLIED xmlns:xsi CDATA #IMPLIED xsi:schemaLocation CDATA #IMPLIED>
+	<!ENTITY eg "http://example.com/">
+]>
+<entity xmlns="http://example.org/">eg</entity>

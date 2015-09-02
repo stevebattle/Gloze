@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://example.org/" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
+
+	<xs:complexType name="SimpleLink">
+		<xs:attributeGroup ref="xlink:simpleLink"/>
+	</xs:complexType>
+
+</xs:schema>

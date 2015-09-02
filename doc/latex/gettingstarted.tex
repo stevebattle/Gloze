@@ -1,0 +1,133 @@
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} may be invoked from the command line using one of the following incantations:
+
+
+\begin{DoxyEnumerate}
+\item {\ttfamily java \mbox{[}-\/options\mbox{]} \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} xmlfile (namespaceURI schemaURL)$\ast$ \mbox{[}nonamespaceschemaURL\mbox{]}}
+\item {\ttfamily java \mbox{[}-\/options\mbox{]} \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} rdffile (namespaceURI schemaURL)$\ast$ \mbox{[}nonamespaceschemaURL\mbox{]}}
+\item {\ttfamily java \mbox{[}-\/options\mbox{]} \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} xsdfile (namespaceURI schemaURL)$\ast$}
+\item {\ttfamily java \mbox{[}-\/options\mbox{]} \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} directory}
+\end{DoxyEnumerate}
+
+In all cases the java classpath must include the Jena libraries (typically under JENA\_\-HOME/lib), gloze.jar, and of course the java runtime.
+
+The first option takes an {\ttfamily xmlfile} and maps it to RDF. To produce a good mapping, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} requires the XML schema that describes the XML document. The schema can be referenced explicitly from within the XML using the XML Schema Instance (XSI) schemaLocation or noNamespaceSchemaLocation attributes on the document element. Any schema not already associated with the instance in this way can be added to the command line prefixed by their namespace URI. The final schema may be (optionally) a no-\/namespace schema in which case no namespace need be supplied. The order of the schema is significant; schema are loaded left to right, so later schema may depend on earlier schema but not vice-\/versa.
+
+The second form takes an {\ttfamily rdffile} and maps it to XML. The RDF will have no XML schema associated with it so the schema must be explicitly supplied as above. Note that in either case, if the XML schema is not supplied, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will make a best attempt to perform a schema-\/less mapping.
+
+The third form takes an XML schema {\ttfamily xsdfile} and maps it to OWL, the Web Ontology Language. Any included, imported or redefined schema are recursively mapped.
+
+The final form allows you to lift the contents of an entire directory at once. This may contain both XML and xml schema documents.
+
+By default, the output is written to the console. By supplying a target file or directory (see options below), the output can be saved.\hypertarget{gettingstarted_options}{}\subsection{Options}\label{gettingstarted_options}
+{\ttfamily -\/Dgloze.attribute=SYMBOL}
+
+All attributes, elements and types are assigned a URI combining their local name and the target (or default) namespace. However, XML schema also states that attributes, elements and types define separate symbol spaces such that if their names were the same they would not become confused. While it is good practice to assign unique names to attributes, elements and types, this may be unavoidable when using an existing schema. If this occurs \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will warn you of the {\itshape potential\/} URI clash, and the remedy is to insert a special symbolic prefix ahead of attribute or element names to disambiguate them. This option defines a symbolic prefix for attributes, which by default is empty. A recommended attribute prefix is the '@' character.
+
+{\ttfamily -\/Dgloze.base=URI}
+
+The base URI defines the root of the XML document which by default is the URL of the XML source document. When mapping XML to RDF, the base is the URI of a resource that forms the root of an RDF 'tree'. When mapping from RDF to XML, there must be a resource with this base URI in the RDF model. The base is also required to expand relative URIs appearing as QNames in the XML, and for XML IDs which represent fragment identifiers relative to this base. This option may be used to supply a different base URI; typically an improvement over the 'file:' scheme of most input files. In either case, an explicit xml:base declaration in the document element will take precedence.
+
+When lifting a whole directory in one batch, the bases can be differentiated by supplying a base terminated by a stroke '/'; \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} appends the relevant filename. This will be $\ast$.xml for a lifted XML file, or $\ast$.owl for a lifted schema.
+
+{\ttfamily -\/Dgloze.class=subClassOf$|$intersectionOf}
+
+OWL classes may be defined either as sub-\/classes or intersections of other classes. The intersection style is stronger, in that {\itshape any\/} individual consistent with the class description is a member by definition. This style is required for reasoning about schema extensions, but is much more expensive to compute. The default for this option is 'subClassOf'. In this case, extensions are not mapped to sub-\/class relationships (restrictions are unaffected).
+
+{\ttfamily -\/Dgloze.closed=true$|$false}
+
+Where an XML schema uses a 'russian doll' style with each type embedded in the definition of its parent element, and so on, there are no global, named complex types to map into classes. Furthermore, because elements define their types locally, different occurrences of the element may have different types. It is not even correct to take the union of these different types, as the schema may be included in another, where the same element is re-\/used with additional types. One solution to this problem, which may not be valid in all cases, is to take the closure over the globally defined attributes and elements, using this as their definition. Other local uses of these attributes and elements must be consistent with their global definition. This option is true by default, but may be disabled if it results in an invalid OWL mapping.
+
+{\ttfamily -\/Dgloze.element=SYMBOL}
+
+Just as attributes may be assigned a prefix to distinguish their symbol space, elements may also be assigned a symbolic prefix. The default is empty. Recommended values include '$\sim$'. Note that types may not be assigned a prefix.
+
+{\ttfamily -\/Dgloze.fixed=true$|$false}
+
+Add fixed values when dropping into XML. Fixed values must either be undefined or must match the fixed value declared in the XML schema. When lifting into RDF, the fixed value is always added.
+
+{\ttfamily -\/Dgloze.lang=N3$|$RDF/XML$|$RDF/XML-\/ABBREV}
+
+This option defines the RDF output format, the default is 'RDF/XML-\/ABBREV' which is about as pretty as it gets while still using XML. This option applies to both lifted RDF and to OWL. Many people prefer the sleek simplicity of N3, though user beware the lack of xml:base in the generation of ontologies in N3.
+
+{\ttfamily -\/Dgloze.order=no$|$seq}
+
+An XML tree is ordered in that the lexical ordering of children is significant. An RDF model is a graph, so a naive mapping will lose this ordering. \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} can record this additional ordering information by adding the reified statements to an RDF sequence. \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will automatically avoid adding this overhead if the ordering can be reconstructed unambiguously from the schema. However, even where the ordering is ambiguous, it may not matter at an application level. In this case, sequencing can be globally disabled.
+
+If ordering is disabled (the default) I've changed this recently to include no-\/schema mappings.
+
+{\ttfamily -\/Dgloze.overwrite=true$|$false}
+
+When true, (the default) \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will overwrite existing output files which is required if the source has changed. However, if it is necessary to interrupt a long run with multiple nested inclusions and imports, the user may opt to recycle the earlier output. In this case \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} can be more or less restarted where it was interrupted.
+
+{\ttfamily -\/Dgloze.report=true$|$false}
+
+When working with large schema, it is often hard to find where a particular attribute, element or type is defined. By opting to generate a report, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will list all the generated attribute, element, and type URIs and their sources.
+
+{\ttfamily -\/Dgloze.roundtrip=true$|$false}
+
+Used mainly for testing, it is sometimes useful to lift an XML document into RDF and then immediately drop this back into XML so the original and final versions can be compared. By default this is disabled.
+
+{\ttfamily -\/Dgloze.schemaLocation=URI$|$dir}
+
+This option allows the schemaLocation to be inserted into the dropped XML.
+
+{\ttfamily -\/Dgloze.space=default$|$preserve}
+
+Whitespace processing, modelled after xml:space; using this parameter is equivalent to setting xml:space on the document element. It has two settings, 'default' and 'preserve', with the latter preserving whitespace. The rule for XML processors is that in the absence of a declaration that identifies the content model of an element, all white space is significant. It is not possible to {\itshape relax\/} whitespace processing of datatypes {\itshape other\/} than xs:string and xs:normalizedString which are already fully whitespace replaced and collapsed. The space setting will therefore only effect string types and other mixed text content.
+
+{\ttfamily -\/Dgloze.target=file}
+
+By default output is written to the console. By defining a target file or directory the output will be saved.
+
+{\ttfamily -\/Dgloze.trace=true$|$false}
+
+This option is only useful for low-\/level debugging of inference. When enabled it produces a trace of rule firings.
+
+{\ttfamily -\/Dgloze.verbose=true$|$false}
+
+When enabled, information (disabled by default) and warnings are logged to the console.
+
+{\ttfamily -\/Dgloze.xmlns=URI}
+
+Unqualified references to schema components are resolved against the default xml namespace. Adding this option is equivalent to defining an xmlns on the document element of the schema. It also provides a substitute target namespace for unqualified components, or more generally for no-\/namespace schema. The default value for this is the URL of the schema.\hypertarget{gettingstarted_examples}{}\subsection{Examples}\label{gettingstarted_examples}
+The following examples demonstrate a number of \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} invocations using different combinations of these options. All examples assume the classpath has been initialised to point to the java runtime; gloze.jar; and the libraries in JENA-\/HOME/lib.
+
+This example lifts 'example.xml' into RDF using a schema 'schema.xsd' with base \char`\"{}http://example.org/\char`\"{}. The output is written to 'example.rdf' and the target is the current directory. The base URI of the XML is \char`\"{}http://example.org/example.xml\char`\"{} and this named resource is the root of the RDF mapping.
+
+{\ttfamily java -\/Dgloze.target=. -\/Dgloze.base=http://example.org/example.xml \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.xml \href{http://example.org/}{\tt http://example.org/} schema.xsd}
+
+This example lifts example.xml using a pair of schema with namespaces. No base is provided as we assume the instance defines its own xml:base. No target is defined, so the output is written to the console.
+
+{\ttfamily java \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.xml \href{http://www.example.org/}{\tt http://www.example.org/} schema1.xsd \href{http://www.example.com/}{\tt http://www.example.com/} schema2.xsd}
+
+This example lifts example.xml using a no-\/namespace schema. Additionally, the resulting RDF is ordered.
+
+{\ttfamily java -\/Dgloze.order=seq -\/Dgloze.xmlns=http://example.org/ -\/Dgloze.base=http://example.org/example.xml \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.xml schema.xsd}
+
+The example lifts 'example.xml', but supplies no schema because this is defined in the XML instance using xsi:schemaLocation. The target language is N3, so the output file is 'example.n3' in the current directory. Finally, the RDF is round-\/tripped back into XML so it may be compared with the XML input.
+
+{\ttfamily java -\/Dgloze.target=. -\/Dgloze.roundtrip=true -\/Dgloze.base=http://example.org/example.xml -\/Dgloze.lang=N3 \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.xml}
+
+The example below drops example.rdf into XML, using \char`\"{}http://example.org/example.xml\char`\"{} as the root resource, and the schema 'schema.xsd'.
+
+{\ttfamily java -\/Dgloze.base=http://example.org/example.xml \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.rdf \href{http://www.example.org/}{\tt http://www.example.org/} schema.xsd}
+
+This example lifts the schema 'schema.xsd' into OWL, using xml:base \char`\"{}http://example.org/schema.xsd\char`\"{}. The output is written to 'schema.owl' in the current target directory.
+
+{\ttfamily java -\/Dgloze.target=. -\/Dgloze.base=http://example.org/schema.xsd \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} schema.xsd}
+
+This example lifts the same schema into OWL but uses N3 as the target language. The schema may import or include other schema which are also lifted into OWL. The output is written to the console.
+
+{\ttfamily java -\/Dgloze.lang=N3 \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} schema.xsd}
+
+The following example lifts a pair of schema into OWL. the first 'schema1.xsd' imports 'schema2.xsd' but the schemalocation is missing, hence the need to supply it as a user defined parameter.
+
+{\ttfamily java -\/Dgloze.target=. -\/Dgloze.base=http://example.org/schema1.owl \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} schema1.xsd \href{http://www.example.com/}{\tt http://www.example.com/} schema2.xsd}
+
+The following invocation is used to generate all the examples used in this documentation. They are contained in a single {\itshape examples\/} directory. Note that few of the examples contain an explicit reference to their schema. In the absence of a schema reference on the command line or in the XML instance, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} looks for a schema in the same directory with the same name (with an 'xsd' extsnsion). Because the supplied base is terminated by a stroke '/', the relevant file name is appended for each lifted file.
+
+{\ttfamily java -\/Dgloze.xmlns=http://example.org/def/ -\/Dgloze.base=http://example.org/ -\/Dgloze.target=examples -\/Dgloze.lang=N3 -\/Dgloze.verbose=true \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} examples}
+
+The following invocation lifts example.xml using a combination of schema obtained via a web proxy, and one locally defined schema (xml.xsd -\/ without a DTD). A schemaLocation would be defined within example.xml
+
+{\ttfamily java -\/Dgloze.base=http://example.org/ -\/Dhttp.proxyHost=myproxy.com -\/Dhttp.proxyPort=8080 \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{com.hp.gloze.Gloze} example.xml \href{http://www.w3.org/XML/1998/namespace}{\tt http://www.w3.org/XML/1998/namespace} xml.xsd} 

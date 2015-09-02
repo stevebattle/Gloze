@@ -1,0 +1,6 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:element name="shipDate" type="xsd:date" nillable="true"/>
+
+</schema>

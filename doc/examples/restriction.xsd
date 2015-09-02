@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/"
+	elementFormDefault="qualified">
+	
+	<xs:complexType name="Bar" mixed="true">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="foobar" type="xs:anySimpleType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Foo">
+		<xs:complexContent>
+			<xs:restriction base="Bar">
+				<xs:sequence>
+					<xs:element name="foobar" type="xs:string" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

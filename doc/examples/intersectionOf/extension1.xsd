@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/"
+	elementFormDefault="qualified">
+	
+	<xs:element name="foo" type="xs:string" />
+		
+	<xs:complexType name="Foo">
+		<xs:sequence>
+			<xs:element ref="foo" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="FooFoo">
+		<xs:complexContent>
+			<xs:extension base="Foo">
+				<xs:sequence>
+					<xs:element ref="foo" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>	
+	
+</xs:schema>

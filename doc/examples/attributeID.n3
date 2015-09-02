@@ -1,0 +1,14 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/attributeID.xml>
+      ns1:identity
+              [ ns1:bar [ ns2:idref <http://example.org/attributeID.xml#foobar>
+                        ] ;
+                ns1:bar [ ns2:idrefs (<http://example.org/attributeID.xml#foobar> <http://example.org/attributeID.xml#foobar>)
+                        ] ;
+                ns1:foobar <http://example.org/attributeID.xml#foobar>
+              ] .

@@ -1,0 +1,70 @@
+@prefix ns1:     <http://example.org/def/> .
+@prefix xsd_:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://example.org/mix.xml>
+      ns1:letterBody _:b1 .
+
+_:b2  a       rdf:Seq ;
+      rdf:_1  [ a       rdf:Statement ;
+                rdf:object "Dear Mr." ;
+                rdf:predicate rdf:value ;
+                rdf:subject _:b2
+              ] ;
+      rdf:_2  [ a       rdf:Statement ;
+                rdf:object "Robert Smith"^^xsd_:string ;
+                rdf:predicate ns1:name ;
+                rdf:subject _:b2
+              ] ;
+      rdf:_3  [ a       rdf:Statement ;
+                rdf:object "." ;
+                rdf:predicate rdf:value ;
+                rdf:subject _:b2
+              ] ;
+      rdf:value "." , "Dear Mr." ;
+      ns1:name "Robert Smith"^^xsd_:string .
+
+_:b1  a       rdf:Seq ;
+      rdf:_1  [ a       rdf:Statement ;
+                rdf:object _:b2 ;
+                rdf:predicate ns1:salutation ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_2  [ a       rdf:Statement ;
+                rdf:object "Your order of" ;
+                rdf:predicate rdf:value ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_3  [ a       rdf:Statement ;
+                rdf:object "1"^^xsd_:positiveInteger ;
+                rdf:predicate ns1:quantity ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_4  [ a       rdf:Statement ;
+                rdf:object """Baby
+Monitor"""^^xsd_:string ;
+                rdf:predicate ns1:productName ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_5  [ a       rdf:Statement ;
+                rdf:object "shipped from our warehouse on" ;
+                rdf:predicate rdf:value ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_6  [ a       rdf:Statement ;
+                rdf:object "1999-05-21"^^xsd_:date ;
+                rdf:predicate ns1:shipDate ;
+                rdf:subject _:b1
+              ] ;
+      rdf:_7  [ a       rdf:Statement ;
+                rdf:object ". ...." ;
+                rdf:predicate rdf:value ;
+                rdf:subject _:b1
+              ] ;
+      rdf:value ". ...." , "Your order of" , "shipped from our warehouse on" ;
+      ns1:productName """Baby
+Monitor"""^^xsd_:string ;
+      ns1:quantity "1"^^xsd_:positiveInteger ;
+      ns1:salutation _:b2 ;
+      ns1:shipDate "1999-05-21"^^xsd_:date .

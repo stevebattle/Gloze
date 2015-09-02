@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/">
+	
+	<xs:element name="foo" type="xs:string"/>
+
+	<!-- element foo has max cardinality 4 -->
+	<xs:complexType name="Any">
+		<xs:sequence>
+			<xs:element ref="foo" />
+			<xs:any namespace="http://example.org"/>
+			<xs:any namespace="##any"/>
+			<xs:any namespace="##targetNamespace"/>
+			<xs:any namespace="##other"/>
+			<xs:any namespace="##local"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

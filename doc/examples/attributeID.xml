@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<identity xmlns="http://example.org/" >
+	<foobar id="foobar"/>
+	<bar idref="foobar"/>
+	<bar idrefs="foobar foobar" />
+</identity>

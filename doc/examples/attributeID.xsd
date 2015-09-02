@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://example.org/" xmlns="http://example.org/"
+	elementFormDefault="qualified">
+	
+	<xs:element name="identity">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="foobar">
+					<xs:complexType>
+						<xs:attribute name="id" type="xs:ID"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="bar" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="idref" type="xs:IDREF"/>
+			    		<xs:attribute name="idrefs" type="xs:IDREFS"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

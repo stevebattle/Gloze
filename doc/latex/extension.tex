@@ -1,0 +1,180 @@
+\hypertarget{extensionComplexContent}{}\subsubsection{Extension of Complex Content}\label{extensionComplexContent}
+Rather than defining a superset of valid instances an extension describes a different, possibly intersecting set of instances that structurally extend the base type. In many cases the extension will describe a valid subclass of the parent, and in these cases \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will assert a subClass relationship.
+
+The schema below defines a class 'Foo' with a single element 'foo', and two extensions of it. If we use extensions simply to add new elements and attributes we have nothing to worry about. The first type 'FooBar' adds a new element 'bar'. The latter type 'FooFoo' extends the base type by adding another occurrence of 'foo'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foo">
+                <xs:complexType />
+        </xs:element>
+
+        <xs:element name="bar">
+                <xs:complexType />
+        </xs:element>
+        
+        <xs:complexType name="Foo">
+                <xs:sequence>
+                        <xs:element ref="foo"/>
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="FooBar">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="bar"/>
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+        
+        <xs:complexType name="FooFoo">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="foo"/>
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>       
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The first extension 'FooBar' results in a valid subClass relationship, with each element having cardinality 1. The latter class 'FooFoo' is not a valid subClass, the cardinality of foo is 2, so the minimum cardinality (2) from the child is greater than the maximum cardinality (1) inherited from the parent. Because this interval is empty, the class 'FooFoo' is unsatisfiable.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:Foo
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+
+ns1:bar
+      a       rdf:Property , owl:ObjectProperty .
+
+ns1:FooBar
+      a       owl:Class ;
+      rdfs:subClassOf ns1:Foo ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:bar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+
+ns1:foo
+      a       rdf:Property , owl:ObjectProperty .
+
+<http://example.org/extension.owl>
+      a       owl:Ontology .
+
+ns1:FooFoo
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "2"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+\end{DoxyCodeInclude}
+
+
+Invalid subClass relationships are detected logically, by asserting the hypothetical relationship and seeing if it results in an inconsistency. If it does -\/ the subclass relationship is retracted. In the next section we will see why schema that use extension in particular ways must be defined in terms of their necessary and sufficient conditions.\hypertarget{extensioncomplexcontent_badExtensions}{}\subsubsection{When extensions go bad}\label{extensioncomplexcontent_badExtensions}
+Unfortunately, a minor change to this example turns this violation into something far nastier. In the example below, we change the type of element 'foo' from an object to a datatype property (an xs:string). A valid instance of 'FooFoo' will include two occurrences of 'foo' with {\itshape identical\/} values. When this is mapped into RDF, these count as a single logical statement, so a valid instance may have a cardinality for 'foo' of 1. Of course we still have the typical case where each occurrence has a different value, with a cardinality of foo of 2. So the cardinality of 'foo' in 'FooFoo' lies in the interval \mbox{[}1,2\mbox{]}. The cardinality of 'foo' in class 'Foo' is 1, as before.
+
+The previous line of reasoning now fails, as the minimum cardinality of the child (1) no longer crosses the maximum cardinality of the parent (1). Nor is it valid to argue that the maximum cardinality of the child (2) is greater than the maximum cardinality of the child (1), in effect widening the definition. The child is defined only in terms of its necessary conditions, and taking the intersection with its parent we still end up with a satisfiable class with a cardinality for 'foo' of 1.
+
+It turns out that 'FooFoo' is a valid subclass of 'Foo' only because of those errant instances where 'foo' has identical values. It's unlikely that this is the meaning of 'FooFoo' intended by the schema author, especially as this particular implication remains implicit. One solution to this problem is to define classes in terms of their necessary and {\itshape sufficient\/} conditions, meaning that any instance satisfying the conditions is a member by definition. We express necessary and sufficient conditions in OWL by defining classes as an intersectionOf a set of restrictions.
+
+We reason {\itshape semantically\/} as follows. Because to be a member of 'FooFoo' it is sufficient to have a cardinality of 'foo' of no more than 2, there must be a valid instance of 'FooFoo' with exactly 2 'foo' properties. This individual can't be a model of 'Foo' because this has a maximum cardinality for 'foo' of 1. If 'FooFoo' were a subClass of 'Foo' then every model of 'FooFoo' must also be a model of 'Foo'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foo" type="xs:string" />
+                
+        <xs:complexType name="Foo">
+                <xs:sequence>
+                        <xs:element ref="foo" />
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="FooFoo">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="foo" />
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>       
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} mapping is invoked with class=intersectionOf. The logical inconsistency is detected and the subClass relationship between 'FooFoo' and 'Foo' is correctly retracted.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/extension1.owl>
+      a       owl:Ontology .
+
+ns1:Foo
+      a       owl:Class ;
+      owl:intersectionOf ([ a       owl:Restriction ;
+                  owl:cardinality "1"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ]) .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+
+ns1:FooFoo
+      a       owl:Class ;
+      owl:intersectionOf ([ a       owl:Restriction ;
+                  owl:minCardinality "1"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ] [ a       owl:Restriction ;
+                  owl:maxCardinality "2"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ]) .
+\end{DoxyCodeInclude}
+ 

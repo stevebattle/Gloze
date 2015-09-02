@@ -1,0 +1,48 @@
+The appearance of an xml:lang attribute states that the element content is expressed in the given language. The same lang value can be set on an RDF literal but not an RDF datatype. Language settings take precedence over datatyping.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<lang xmlns="http://example.org/" xml:lang="en">language</lang>
+\end{DoxyCodeInclude}
+
+
+This conforms to the following schema. Note that xml:lang is defined in a standard schema obtainable from \href{http://www.w3.org/XML/1998/namespace.}{\tt http://www.w3.org/XML/1998/namespace.} The attribute group 'specialAttrs' includes xml:base, xml:lang and xml:space.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://example.org/" xmlns="http://example.org/" xmln
+      s:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocatio
+      n="xml.xsd" />
+        <xs:element name="lang">
+                <xs:complexType>
+                        <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="xml:specialAttrs"
+      />
+                                </xs:extension>
+                        </xs:simpleContent>
+                </xs:complexType>
+        </xs:element>
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The resulting RDF below includes the literal 'language' in the english language.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/attributeLang.xml>
+      ns1:lang
+              [ rdf:value "language"@en
+              ] .
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,80 @@
+\hypertarget{restrictionComplexContent}{}\subsubsection{Restriction of complex content}\label{restrictionComplexContent}
+Restrictions are easier to map because they only add new constraints, thereby reducing the set of valid instances. The occurrences of elements and attributes may be reduced (though not below the minimum of the parent class) and their types may be narrowed.
+
+In the example below, the complex type 'Bar' restricts 'Foo' by reducing the number of occurrences of element 'foo' from unbounded to 1; by narrowing the type from xs:anySimpleType to xs:string; and by disallowing mixed content.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:complexType name="Bar" mixed="true">
+                <xs:sequence maxOccurs="unbounded">
+                        <xs:element name="foobar" type="xs:anySimpleType" />
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="Foo">
+                <xs:complexContent>
+                        <xs:restriction base="Bar">
+                                <xs:sequence>
+                                        <xs:element name="foobar" type="xs:string
+      " />
+                                </xs:sequence>
+                        </xs:restriction>
+                </xs:complexContent>
+        </xs:complexType>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} assumes correctness of the schema and asserts the subclass relationship without further checks.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:Foo
+      a       owl:Class ;
+      rdfs:subClassOf ns1:Bar ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xs_:string ;
+                owl:onProperty ns1:foobar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foobar
+              ] .
+
+<http://example.org/restriction.owl>
+      a       owl:Ontology .
+
+ns1:Bar
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom rdfs:Literal ;
+                owl:onProperty ns1:foobar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:minCardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foobar
+              ] .
+
+ns1:foobar
+      a       rdf:Property , owl:DatatypeProperty .
+\end{DoxyCodeInclude}
+ 

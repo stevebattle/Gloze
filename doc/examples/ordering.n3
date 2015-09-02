@@ -1,0 +1,11 @@
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/ordering.xml>
+      ns1:foobar
+              [ ns1:bar "foobar"^^xs_:string ;
+                ns1:foo "foobar"^^xs_:string
+              ] .

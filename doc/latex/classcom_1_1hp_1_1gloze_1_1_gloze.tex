@@ -1,0 +1,242 @@
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze}{
+\subsection{com.hp.gloze.Gloze Class Reference}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze}\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a1baa43e23eabc27283a8d41041e23b50}{Gloze} ()
+\item 
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a7ad809006ee768f2938aabf10efe9f26}{Gloze} (boolean silent)
+\item 
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_ad81afee66006cc4229a75296ce365aa8}{Gloze} (URL schemaLocation, URI targetNS)  throws Exception 
+\item 
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a89bab13ce337f1d674204631e220898e}{Gloze} (URL\mbox{[}$\,$\mbox{]} schemaLocation, URI\mbox{[}$\,$\mbox{]} targetNS)  throws Exception 
+\item 
+void \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_acb73c06c06a33a44cbaa0e846c76fd33}{xml\_\-to\_\-rdf} (File source, File target, URI base, Model model)  throws Exception 
+\item 
+Document \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_afb5f6d01b6ac4f73b37a7c38982b6244}{rdf\_\-to\_\-xml} (File source, File target, URI base, Model model)  throws Exception 
+\item 
+OntModel \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a9db17584be845f2055b8d8895f0f7f29}{xsd\_\-to\_\-owl} (File source, String base)  throws Exception 
+\item 
+Model \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a772e519e007a8d678dee15a1f0128e40}{lift} (Document xml, URL url, URI base)  throws Exception 
+\item 
+boolean \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a18b281e8a93da94ddd22666333cf0f06}{lift} (Document xml, URL url, URI base, Model model)  throws Exception 
+\item 
+Document \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_afadb6872a06d0ae277b0605ea7a45084}{drop} (Model model, URI uri)  throws Exception 
+\item 
+Document \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a922d878145fee8de5841693ebd3cbf42}{drop} (Resource resource)  throws Exception 
+\end{DoxyCompactItemize}
+\subsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static schema \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_ab90f0fa4ae77452d28c46cd45a083b44}{loadSchema} (URL url)  throws Exception 
+\item 
+static void \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_ac68dbbdb47a624bd15475e0e05f428d8}{clearCache} ()
+\item 
+static schema \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a215a61b8702140cb4f342140f87bf963}{getCachedSchema} (String namespace)
+\item 
+static schema \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a02aace1b3f879b77a6ebf2b14c72dac9}{initSchema} (URI namespace, URL url, Map$<$ URL, schema $>$ schemaMap)  throws Exception 
+\item 
+static schema \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_a58ae2633f0436da4c607a6571a2faa81}{initSchemaXSI} (Element element, URL location, String defaultNS, Map$<$ URL, schema $>$ schemaMap)  throws Exception 
+\item 
+static schema \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_ae82f468c04ca83a5f72c6b7570ed804e}{initSchemaLocation} (URI namespace, URL schemaLocation, String defaultNS, Map$<$ URL, schema $>$ schemaMap)  throws Exception, URISyntaxException 
+\item 
+static void \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze_af78268830634f6069e1ab4733bb974d3}{main} (String args\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The programmatic interface for \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze}. 
+
+\subsubsection{Constructor \& Destructor Documentation}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a1baa43e23eabc27283a8d41041e23b50}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!Gloze@{Gloze}}
+\index{Gloze@{Gloze}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{Gloze}]{\setlength{\rightskip}{0pt plus 5cm}com.hp.gloze.Gloze.Gloze ()}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a1baa43e23eabc27283a8d41041e23b50}
+Create an instacen of \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze}. \hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a7ad809006ee768f2938aabf10efe9f26}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!Gloze@{Gloze}}
+\index{Gloze@{Gloze}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{Gloze}]{\setlength{\rightskip}{0pt plus 5cm}com.hp.gloze.Gloze.Gloze (boolean {\em silent})}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a7ad809006ee768f2938aabf10efe9f26}
+Construct an instance of \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze}. If no target is provided then the output is normally written to the console. This constructor provides the option to silence this output, and is useful for test purposes. 
+\begin{DoxyParams}{Parameters}
+\item[{\em silent}]: boolean disables output where no target is supplied \end{DoxyParams}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_ad81afee66006cc4229a75296ce365aa8}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!Gloze@{Gloze}}
+\index{Gloze@{Gloze}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{Gloze}]{\setlength{\rightskip}{0pt plus 5cm}com.hp.gloze.Gloze.Gloze (URL {\em schemaLocation}, \/  URI {\em targetNS})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_ad81afee66006cc4229a75296ce365aa8}
+Construct an instance of \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} for a schema with the given target namespace.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em schemaLocation}]: URL \item[{\em targetNS}]: URI \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a89bab13ce337f1d674204631e220898e}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!Gloze@{Gloze}}
+\index{Gloze@{Gloze}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{Gloze}]{\setlength{\rightskip}{0pt plus 5cm}com.hp.gloze.Gloze.Gloze (URL\mbox{[}$\,$\mbox{]} {\em schemaLocation}, \/  URI\mbox{[}$\,$\mbox{]} {\em targetNS})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a89bab13ce337f1d674204631e220898e}
+Construct an instance of \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} given multiple schema locations and target namespaces.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em schemaLocation}]: array of URLs \item[{\em targetNS}]: array of URIs \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+
+
+\subsubsection{Member Function Documentation}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_ac68dbbdb47a624bd15475e0e05f428d8}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!clearCache@{clearCache}}
+\index{clearCache@{clearCache}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{clearCache}]{\setlength{\rightskip}{0pt plus 5cm}static void com.hp.gloze.Gloze.clearCache ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_ac68dbbdb47a624bd15475e0e05f428d8}
+Clear the static cache. \hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a922d878145fee8de5841693ebd3cbf42}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!drop@{drop}}
+\index{drop@{drop}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{drop}]{\setlength{\rightskip}{0pt plus 5cm}Document com.hp.gloze.Gloze.drop (Resource {\em resource})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a922d878145fee8de5841693ebd3cbf42}
+Drop RDF resource into XML. The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. 
+\begin{DoxyParams}{Parameters}
+\item[{\em resource}]resource representing the root of the XML document \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+XML Document 
+\end{DoxyReturn}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_afadb6872a06d0ae277b0605ea7a45084}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!drop@{drop}}
+\index{drop@{drop}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{drop}]{\setlength{\rightskip}{0pt plus 5cm}Document com.hp.gloze.Gloze.drop (Model {\em model}, \/  URI {\em uri})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_afadb6872a06d0ae277b0605ea7a45084}
+Drop RDF model into XML (starting with named resource). The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. 
+\begin{DoxyParams}{Parameters}
+\item[{\em model}]containing the RDF meta-\/data \item[{\em uri}]the (named) root of the XML output \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+XML Document 
+\end{DoxyReturn}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a215a61b8702140cb4f342140f87bf963}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!getCachedSchema@{getCachedSchema}}
+\index{getCachedSchema@{getCachedSchema}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{getCachedSchema}]{\setlength{\rightskip}{0pt plus 5cm}static schema com.hp.gloze.Gloze.getCachedSchema (String {\em namespace})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a215a61b8702140cb4f342140f87bf963}
+Get a schema from the static cache. 
+\begin{DoxyParams}{Parameters}
+\item[{\em namespace}]\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+schema instance 
+\end{DoxyReturn}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a02aace1b3f879b77a6ebf2b14c72dac9}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!initSchema@{initSchema}}
+\index{initSchema@{initSchema}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{initSchema}]{\setlength{\rightskip}{0pt plus 5cm}static schema com.hp.gloze.Gloze.initSchema (URI {\em namespace}, \/  URL {\em url}, \/  Map$<$ URL, schema $>$ {\em schemaMap})  throws Exception \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a02aace1b3f879b77a6ebf2b14c72dac9}
+Initialise a \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} instance with a schema given its URL and target namespace. The schemaMap is updated with the new mapping. 
+\begin{DoxyParams}{Parameters}
+\item[{\em namespace}]: URI \item[{\em url}]: schema location URL \item[{\em schemaMap}]: Maps schema location to schema instance \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_ae82f468c04ca83a5f72c6b7570ed804e}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!initSchemaLocation@{initSchemaLocation}}
+\index{initSchemaLocation@{initSchemaLocation}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{initSchemaLocation}]{\setlength{\rightskip}{0pt plus 5cm}static schema com.hp.gloze.Gloze.initSchemaLocation (URI {\em namespace}, \/  URL {\em schemaLocation}, \/  String {\em defaultNS}, \/  Map$<$ URL, schema $>$ {\em schemaMap})  throws Exception, URISyntaxException \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_ae82f468c04ca83a5f72c6b7570ed804e}
+Add the schema, with given namespace and location, to the schema map. 
+\begin{DoxyParams}{Parameters}
+\item[{\em namespace}]: the preferred namespace \item[{\em schemaLocation}]\item[{\em defaultNS}]: used if no namespace is supplied \item[{\em schemaMap}]: updated with the new schema mapping \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+schema instance 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\item[{\em URISyntaxException}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a58ae2633f0436da4c607a6571a2faa81}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!initSchemaXSI@{initSchemaXSI}}
+\index{initSchemaXSI@{initSchemaXSI}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{initSchemaXSI}]{\setlength{\rightskip}{0pt plus 5cm}static schema com.hp.gloze.Gloze.initSchemaXSI (Element {\em element}, \/  URL {\em location}, \/  String {\em defaultNS}, \/  Map$<$ URL, schema $>$ {\em schemaMap})  throws Exception \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a58ae2633f0436da4c607a6571a2faa81}
+Initialise schema from schema location(s) defined in an xml element (typically the document element or an element corresponding to an xs:any wild-\/card). 
+\begin{DoxyParams}{Parameters}
+\item[{\em element}]: potentially containing a schemaLocation \item[{\em location}]: URL of this XML document. \item[{\em defaultNS}]used instead of the schema URL. \item[{\em schemaMap}]maps schema location to schema instance. \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a18b281e8a93da94ddd22666333cf0f06}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!lift@{lift}}
+\index{lift@{lift}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{lift}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.hp.gloze.Gloze.lift (Document {\em xml}, \/  URL {\em url}, \/  URI {\em base}, \/  Model {\em model})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a18b281e8a93da94ddd22666333cf0f06}
+Lift XML (document) into RDF metadata, adding to existing model. The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. 
+\begin{DoxyParams}{Parameters}
+\item[{\em xml}]input document \item[{\em url}]location of the input document (required for resolving relative schema location) \item[{\em base}]: URI of input document base \item[{\em model}]output model \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean indicating success or failure. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a772e519e007a8d678dee15a1f0128e40}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!lift@{lift}}
+\index{lift@{lift}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{lift}]{\setlength{\rightskip}{0pt plus 5cm}Model com.hp.gloze.Gloze.lift (Document {\em xml}, \/  URL {\em url}, \/  URI {\em base})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a772e519e007a8d678dee15a1f0128e40}
+recommended programmatic interfaces Lift XML (document) into RDF metadata, creating a new model. The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. 
+\begin{DoxyParams}{Parameters}
+\item[{\em xml}]input document to lift \item[{\em url}]location of the input document (required for relative schema location) \item[{\em base}]: URI of the input document base \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+model 
+\end{DoxyReturn}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_ab90f0fa4ae77452d28c46cd45a083b44}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!loadSchema@{loadSchema}}
+\index{loadSchema@{loadSchema}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{loadSchema}]{\setlength{\rightskip}{0pt plus 5cm}static schema com.hp.gloze.Gloze.loadSchema (URL {\em url})  throws Exception \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_ab90f0fa4ae77452d28c46cd45a083b44}
+Load schema with URL into a static cache. The schema is not associated with a \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} instance. 
+\begin{DoxyParams}{Parameters}
+\item[{\em url}]: schema URL \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+schema instance 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em Exception}]\end{DoxyExceptions}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_af78268830634f6069e1ab4733bb974d3}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!main@{main}}
+\index{main@{main}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{main}]{\setlength{\rightskip}{0pt plus 5cm}static void com.hp.gloze.Gloze.main (String {\em args}\mbox{[}$\,$\mbox{]})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_af78268830634f6069e1ab4733bb974d3}
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} main program. The main input parameter is XML to lift or RDF to drop. This is followed by an (optional) sequence of targetNamespace schemaLocation pairs, followed by a single (optional) no-\/namespace schema location. \hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_afb5f6d01b6ac4f73b37a7c38982b6244}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!rdf\_\-to\_\-xml@{rdf\_\-to\_\-xml}}
+\index{rdf\_\-to\_\-xml@{rdf\_\-to\_\-xml}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{rdf\_\-to\_\-xml}]{\setlength{\rightskip}{0pt plus 5cm}Document com.hp.gloze.Gloze.rdf\_\-to\_\-xml (File {\em source}, \/  File {\em target}, \/  URI {\em base}, \/  Model {\em model})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_afb5f6d01b6ac4f73b37a7c38982b6244}
+Drop RDF metadata into XML (given source and target files). The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. The model should be initialised with a prefix map used to define define xml namespaces. 
+\begin{DoxyParams}{Parameters}
+\item[{\em source}]RDF \item[{\em target}]file \item[{\em base}]URI for XML \item[{\em model}]containing a prefix map. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+XML document 
+\end{DoxyReturn}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_acb73c06c06a33a44cbaa0e846c76fd33}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!xml\_\-to\_\-rdf@{xml\_\-to\_\-rdf}}
+\index{xml\_\-to\_\-rdf@{xml\_\-to\_\-rdf}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{xml\_\-to\_\-rdf}]{\setlength{\rightskip}{0pt plus 5cm}void com.hp.gloze.Gloze.xml\_\-to\_\-rdf (File {\em source}, \/  File {\em target}, \/  URI {\em base}, \/  Model {\em model})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_acb73c06c06a33a44cbaa0e846c76fd33}
+Lift XML to RDF metadata (given source and target files). The \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} instance should be pre-\/initialised with the relevant XML schema. 
+\begin{DoxyParams}{Parameters}
+\item[{\em source}]document \item[{\em target}]file \item[{\em base}]of the XML document \item[{\em model}]for the RDF \end{DoxyParams}
+\hypertarget{classcom_1_1hp_1_1gloze_1_1_gloze_a9db17584be845f2055b8d8895f0f7f29}{
+\index{com::hp::gloze::Gloze@{com::hp::gloze::Gloze}!xsd\_\-to\_\-owl@{xsd\_\-to\_\-owl}}
+\index{xsd\_\-to\_\-owl@{xsd\_\-to\_\-owl}!com::hp::gloze::Gloze@{com::hp::gloze::Gloze}}
+\paragraph[{xsd\_\-to\_\-owl}]{\setlength{\rightskip}{0pt plus 5cm}OntModel com.hp.gloze.Gloze.xsd\_\-to\_\-owl (File {\em source}, \/  String {\em base})  throws Exception }\hfill}
+\label{classcom_1_1hp_1_1gloze_1_1_gloze_a9db17584be845f2055b8d8895f0f7f29}
+Lift XML schema to OWL ontology. 
+\begin{DoxyParams}{Parameters}
+\item[{\em source}]schema \item[{\em base}]of the ontology \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ontology 
+\end{DoxyReturn}

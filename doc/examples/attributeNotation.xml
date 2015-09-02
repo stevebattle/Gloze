@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<!-- example adapted from http://www.w3.org/TR/2004/WD-xml-media-types-20041102/ -->
+<notation xmlns="http://www.iana.org/assignments/media-types/image/" 
+	mimeType="png">/aWKKapGGyQ=</notation>

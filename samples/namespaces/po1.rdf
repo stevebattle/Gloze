@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:apo="http://www.example.com/PO1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:apo_="http://www.example.com/PO1#"
+    xmlns:ns1="http://example.org#">
+  <rdf:Description rdf:about="">
+    <apo_:purchaseOrder>
+      <apo_:PurchaseOrderType>
+        <apo_:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Hurry, my lawn is going wild</apo_:comment>
+        <ns1:billTo>
+          <apo_:USAddress>
+            <ns1:street rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >8 Oak Avenue</ns1:street>
+            <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Robert Smith</ns1:name>
+            <ns1:country rdf:datatype="http://www.w3.org/2001/XMLSchema#NMTOKEN"
+            >US</ns1:country>
+          </apo_:USAddress>
+        </ns1:billTo>
+        <ns1:shipTo>
+          <apo_:USAddress>
+            <ns1:street rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >123 Maple Street</ns1:street>
+            <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Alice Smith</ns1:name>
+            <ns1:country rdf:datatype="http://www.w3.org/2001/XMLSchema#NMTOKEN"
+            >US</ns1:country>
+          </apo_:USAddress>
+        </ns1:shipTo>
+        <ns1:orderDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >1999-10-20</ns1:orderDate>
+      </apo_:PurchaseOrderType>
+    </apo_:purchaseOrder>
+  </rdf:Description>
+</rdf:RDF>

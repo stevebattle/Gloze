@@ -1,0 +1,57 @@
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xlink_:  <http://www.w3.org/1999/xlink#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xlink:   <http://www.w3.org/1999/xlink> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns2:SimpleLink
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:show
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:arcrole
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:href
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:type
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:title
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty xlink_:type
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:actuate
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty xlink_:role
+              ] .
+
+<http://example.org/linkType.owl>
+      a       owl:Ontology ;
+      owl:imports <http://example.org/xlink.owl> .

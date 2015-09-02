@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.iana.org/assignments/media-types/image/" 
+	xmlns="http://www.iana.org/assignments/media-types/image/">
+		
+	<xs:notation name="jpeg" public="image/jpeg"/>
+	<xs:notation name="gif" public="image/gif" />
+	<xs:notation name="png" public="image/png" />
+	
+	<xs:element name="notation">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="xs:base64Binary">
+					<xs:attribute name="mimeType">
+						<xs:simpleType >
+							<xs:restriction base="xs:NOTATION">
+								<xs:enumeration value="jpeg"/>
+								<xs:enumeration value="gif"/>
+								<xs:enumeration value="png"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

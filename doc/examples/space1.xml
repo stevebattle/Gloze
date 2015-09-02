@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:foobar xmlns:ns1="http://example.org/">foo bar<ns1:foo>foo</ns1:foo>
+    <ns1:bar>bar</ns1:bar>foo bar</ns1:foobar>

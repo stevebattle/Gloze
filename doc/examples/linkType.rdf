@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns1="http://example.org/def/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xlink_="http://www.w3.org/1999/xlink#"
+    xmlns:eg="http://example.org/"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rdf:Description rdf:about="">
+    <ns1:myLink>
+      <eg:SimpleLink>
+        <xlink_:href rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+        >http://example.org/foo.xml</xlink_:href>
+        <xlink_:type rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >simple</xlink_:type>
+      </eg:SimpleLink>
+    </ns1:myLink>
+  </rdf:Description>
+</rdf:RDF>

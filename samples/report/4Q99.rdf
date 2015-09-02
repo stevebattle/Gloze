@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:r_="http://www.example.com/Report#"
+    xmlns:xipo_="http://www.example.com/IPO#"
+    xmlns:r="http://www.example.com/Report"
+    xmlns:ns1="http://www.w3.org/2001/XMLSchema#"
+    xmlns:xipo="http://www.example.com/IPO"
+    xmlns:ns2="http://example.org#">
+  <rdf:Description rdf:about="">
+    <r_:purchaseReport rdf:parseType="Resource">
+      <r_:parts>
+        <r_:PartsType>
+          <r_:part rdf:parseType="Resource">
+            <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >455-BX</ns2:number>
+            <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Sturdy Shelves</rdf:value>
+          </r_:part>
+          <r_:part rdf:parseType="Resource">
+            <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >833-AA</ns2:number>
+            <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Lapis Necklace</rdf:value>
+          </r_:part>
+          <r_:part rdf:parseType="Resource">
+            <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >926-AA</ns2:number>
+            <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Baby Monitor</rdf:value>
+          </r_:part>
+          <r_:part rdf:parseType="Resource">
+            <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >872-AA</ns2:number>
+            <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Lawnmower</rdf:value>
+          </r_:part>
+        </r_:PartsType>
+      </r_:parts>
+      <r_:regions>
+        <r_:RegionsType>
+          <r_:zip rdf:parseType="Resource">
+            <r_:part rdf:parseType="Resource">
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >4</ns2:quantity>
+              <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >455-BX</ns2:number>
+            </r_:part>
+            <ns2:code rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+            >63143</ns2:code>
+          </r_:zip>
+          <r_:zip rdf:parseType="Resource">
+            <r_:part rdf:parseType="Resource">
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns2:quantity>
+              <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >455-BX</ns2:number>
+            </r_:part>
+            <r_:part rdf:parseType="Resource">
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns2:quantity>
+              <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >833-AA</ns2:number>
+            </r_:part>
+            <r_:part rdf:parseType="Resource">
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns2:quantity>
+              <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >926-AA</ns2:number>
+            </r_:part>
+            <r_:part rdf:parseType="Resource">
+              <ns2:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+              >1</ns2:quantity>
+              <ns2:number rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >872-AA</ns2:number>
+            </r_:part>
+            <ns2:code rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+            >95819</ns2:code>
+          </r_:zip>
+        </r_:RegionsType>
+      </r_:regions>
+      <ns2:periodEnding rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+      >1999-12-31</ns2:periodEnding>
+      <ns2:period rdf:datatype="http://www.w3.org/2001/XMLSchema#duration"
+      >P3M</ns2:period>
+    </r_:purchaseReport>
+  </rdf:Description>
+</rdf:RDF>

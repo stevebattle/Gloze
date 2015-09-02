@@ -1,0 +1,1914 @@
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will process the following schema components. Excluded components are xs:field, xs:key, xs:keyref, xs:unique which enable XML content to be identified by XPath expressions.
+
+
+\begin{DoxyItemize}
+\item \hyperlink{all}{all}
+\item \hyperlink{annotation}{annotation}
+\item \hyperlink{any}{any}
+\item \hyperlink{anyattribute}{anyAttribute}
+\item \hyperlink{attribute}{attribute}
+\item \hyperlink{attributegroup}{attributeGroup}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{choice}{choice}
+\item \hyperlink{complexcontent}{complexContent}
+\item \hyperlink{complextype}{complexType}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{documentation}{documentation}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{element}{element}
+\item \hyperlink{enumeration}{enumeration}
+\item \hyperlink{extension}{extension}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item fractionDigits
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{group}{group}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{import}{import}
+\item \hyperlink{include}{include}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item length
+\item \hyperlink{list}{list}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item maxExclusive
+\item maxInclusive
+\item maxLength
+\item minExclusive
+\item minInclusive
+\item maxLength
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item pattern
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{redefine}{redefine}
+\item \hyperlink{restriction}{restriction}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{sequence}{sequence}
+\item \hyperlink{simplecontent}{simpleContent}
+\item \hyperlink{simpletype}{simpleType}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item totalDigits
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{union}{union}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{whitespace}{whiteSpace} 
+\end{DoxyItemize}\hypertarget{all}{}\subsection{all}\label{all}
+The 'all' compositor allows all combinations of its child elements. The ordering of these elements may be significant. Child elements may be optional (with minimum occurrences of 0) as in the example below with an element 'bar', but a {\itshape missing\/} 'foo' element..
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0"?>
+<foobar xmlns="http://example.org/">
+        <bar>foobar</bar>
+</foobar>
+
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/all.xml>
+      ns1:foobar
+              [ ns1:bar "foobar"^^xs_:string
+              ] .
+\end{DoxyCodeInclude}
+
+
+This example demonstrates that compositors like 'all' don't explicitly appear in the RDF model nor in the OWL ontology. In the schema below, 'foo' and 'bar' are defined locally so are not included in the (global elements and attributes) closure. They are described as datatype properties with unknown range. The types that appear in the schema are translated as 'allValuesFrom' restrictions in the context of a class definition.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/" 
+        elementFormDefault="qualified">
+
+        <xs:element name="foobar">
+                <xs:complexType mixed="true">
+                        <xs:all>
+                                <xs:element name="foo" type="xs:string" minOccurs
+      ="0"/>
+                                <xs:element name="bar" type="xs:string"/>
+                        </xs:all>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+Because 'foo' is optional, it has a maximum cardinality of 1 but an implied minimum cardinality of 0.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:bar
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:foobar
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xs_:int ;
+                          owl:onProperty ns1:foo
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xs_:string ;
+                          owl:onProperty ns1:foo
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xs_:int ;
+                          owl:onProperty ns1:bar
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xs_:string ;
+                          owl:onProperty ns1:bar
+                        ]
+              ] .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty .
+
+<http://example.org/all.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+\hypertarget{list_annotationChildren}{}\subsubsection{Child components}\label{list_annotationChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{element}{element} 
+\end{DoxyItemize}\hypertarget{annotation}{}\subsection{annotation}\label{annotation}
+A documentation annotation on a schema, element, attribute or complex type is recorded as rdfs:comment. See documentation below for examples.\hypertarget{list_annotationChildren}{}\subsubsection{Child components}\label{list_annotationChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{documentation}{Documentation} 
+\end{DoxyItemize}\hypertarget{any}{}\subsection{any}\label{any}
+The use of xs:any makes it necessary to map content for which we have no schema.
+
+The example below includes two marked-\/up 'parts', and the same content represented as an HTML table. \begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/MarkUp/Group/}{\tt http://www.w3.org/MarkUp/Group/}
+\end{DoxySeeAlso}
+
+\begin{DoxyCodeInclude}
+<report xmlns="http://example.org/">
+  <part>foo</part>
+  <part>bar</part>
+  
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:id="html">           
+    <table>
+      <tr><td xml:lang="en">foo</td></tr>
+      <tr><td>bar</td></tr>
+    </table>
+  </html>
+
+</report>
+\end{DoxyCodeInclude}
+
+
+The HTML content is here represented by an xs:any element from the 'xhtml' namespace, which may include attributes and arbitrarily nested elements.
+
+
+\begin{DoxyCodeInclude}
+<xs:schema targetNamespace="http://example.org/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified
+      ">
+
+        <xs:element name="report">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="part" type="xs:string" maxOccur
+      s="unbounded"/>
+                                <xs:any namespace="http://www.w3.org/1999/xhtml" 
+      processContents="skip"/>        
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+
+\end{DoxyCodeInclude}
+
+
+Not having the schema to hand, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} regards any content as ambiguously ordered so adds all content to an rdf:Seq. This helps to distinguish attributes from elements; any properties not added to this sequence are therefore attributes. Elements with a single value (and no attributes) are added as literal properties (see 'tr').
+
+The example also includes an xml:id defined to be of type xs:ID, regardless of the schema. This identifies the html resource, and is translated as a fragment identifier relative to the document base.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/any.xml#html>
+      <http://www.w3.org/1999/xhtml#table>
+              [ <http://www.w3.org/1999/xhtml#tr>
+                        [ <http://www.w3.org/1999/xhtml#td>
+                                  [ rdf:value "foo"@en
+                                  ]
+                        ] ;
+                <http://www.w3.org/1999/xhtml#tr>
+                        [ <http://www.w3.org/1999/xhtml#td>
+                                  "bar"
+                        ]
+              ] .
+
+<http://example.org/any.xml>
+      ns2:report
+              [ ns2:part "foo"^^xs_:string , "bar"^^xs_:string ;
+                <http://www.w3.org/1999/xhtml#html>
+                        <http://example.org/any.xml#html>
+              ] .
+\end{DoxyCodeInclude}
+
+
+If a schema is available for the wild-\/card element, then it may be referenced from within the XML instance document using an xsi:schemaLocation or xsi:noNamespaceSchemaLocation attribute. This can appear in the document element or on the wild-\/card element itself. \hypertarget{anyAttribute}{}\subsection{anyAttribute}\label{anyAttribute}
+Sometimes it is useful to create a slot that would match a range of attributes. One use of this is to allow predefined xml attributes on an element, such as xml:lang; xml:id; xml:space without having to include the XML schema. XML schema is not savvy to these new features, so they must be explicitly added to the schema.
+
+\begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/XML/1998/namespace}{\tt http://www.w3.org/XML/1998/namespace}
+\end{DoxySeeAlso}
+The example below includes two marked-\/up 'parts'. We use xml:id to add an identifier to 'foo', and xml:lang to define the language in which 'bar' is expressed.
+
+
+\begin{DoxyCodeInclude}
+<report xmlns="http://example.org/">
+  <part xml:id="foo">foo</part>
+  <part xml:lang="en">bar</part>
+</report>
+\end{DoxyCodeInclude}
+
+
+The schema for the XML namespace, and hence the xml:id attribute, is not imported, so the interpretation of anyAttribute is non-\/strict.
+
+
+\begin{DoxyCodeInclude}
+<xs:schema targetNamespace="http://example.org/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified
+      ">
+
+        <xs:element name="report">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="part" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                                <xs:simpleContent>
+                                                        <xs:extension base="xs:st
+      ring">
+                                                        <xs:anyAttribute namespac
+      e="http://www.w3.org/XML/1998/namespace" 
+                                                         processContents="lax" />
+                                                                      
+                                                        </xs:extension>
+                                                </xs:simpleContent>
+                                        </xs:complexType>
+                                </xs:element>
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+
+\end{DoxyCodeInclude}
+
+
+Note that even without the XML namespace schema to hand, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} treats xml:id and xml:lang correctly.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/anyAttribute.xml>
+      ns2:report
+              [ ns2:part <http://example.org/anyAttribute.xml#foo> ;
+                ns2:part
+                        [ rdf:value "bar"@en
+                        ]
+              ] .
+
+<http://example.org/anyAttribute.xml#foo>
+      rdf:value "foo"^^xs_:string .
+\end{DoxyCodeInclude}
+ \hypertarget{attribute}{}\subsection{attribute}\label{attribute}
+Attributes map to RDF properties. An instance of an attribute maps to an RDF statement. A qualified attribute is defined in the target namespace of the schema. The target namespace is the namespace of the corresponding RDF property.
+
+e.g. The following schema declares a global and therefore qualified attribute 'foo' defined in the target namespace.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/">
+        <xs:attribute name="foo" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+By default, we take the closure over global attributes, assuming that {\itshape all\/} uses of the property conform to this global declaration. This means that 'foo' globally ranges over rdfs:Literal (the datatype corresponding to xs:anySimpleType). If this assumption is false, attribute closure may be disabled (closed=false), and global ranges are not asserted.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/attribute1.owl>
+      a       owl:Ontology .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range rdfs:Literal .
+\end{DoxyCodeInclude}
+
+
+Like elements, if the target namespace ends with an alpha-\/numeric a fragment separator '\#' is introduced.
+
+Unqualified attributes are not defined in the target namespace. Unqualified attributes occur if no target namespace is defined, or where the attribute is defined locally and its form is unqualified. The example below defines the attribute 'foo' locally within an attributeGroup; it's form is unqualified by default.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:attributeGroup name="myGroup">
+                <xs:attribute name="foo"/>
+        </xs:attributeGroup>
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+All we can say about the attribute is that it is a property, for the same name may be re-\/used where its range is a different datatype or even an object type. Closure doesn't apply to local attributes.
+
+The following OWL was produced with lang=N3. The unqualified attribute is defined in the user-\/supplied default namespace, with xmlns=http://example.org/def/ .
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty .
+
+<http://example.org/attribute2.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+
+
+In xml schema, attributes have their own symbol space, distinct from other components such as elements and types. If there are overlaps between these symbol spaces, it is advisable to introduce a symbolic prefix to keep them distinct.
+
+e.g. the attribute named 'foo' and type named 'foo' in the target namespace \href{http://example.org/}{\tt http://example.org/} will clash. Introducing a symbolic prefix '@' (at the command line) for attributes resolves the clash giving us an RDF property name \href{http://example.org/@foo.}{\tt http://example.org/@foo.}
+
+The OWL mapping below was generated from the first schema above, but with attribute=@
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/@foo>
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range rdfs:Literal .
+
+<http://example.org/attribute3.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+\hypertarget{attributenotation_attributeChildren}{}\subsubsection{Child components}\label{attributenotation_attributeChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{simpletype}{simpleType}
+\item \hyperlink{annotation}{annotation} 
+\end{DoxyItemize}\hypertarget{attributeGroup}{}\subsection{attributeGroup}\label{attributeGroup}
+Attribute groups allow the schema designer to collect together common groups of attributes. The example below is based on the XML Linking standard {\itshape XLink\/} which defines groups of attributes that define a number of link properties including xlink:href and xlink:type that we will see here.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<link xmlns="http://example.org/" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        xlink:href="foo.xml" />
+
+\end{DoxyCodeInclude}
+
+
+The xlink:href attribute is of type xs:anyURI, and this is resolved against the document base to provide an absolute URI that retains its meaning in RDF. However, it remains a literal of type xs:anyURI.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xlink_:  <http://www.w3.org/1999/xlink#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xlink:   <http://www.w3.org/1999/xlink> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/link.xml>
+      ns2:link
+              [ xlink_:href "http://example.org/foo.xml"^^xs_:anyURI ;
+                xlink_:type "simple"^^xs_:string
+              ] .
+\end{DoxyCodeInclude}
+
+
+For brevity only the attributeGroup reference is included here. The simpleLink attribute group also defines a {\itshape fixed\/} xlink:type attribute that has an implied value of 'simple' which is added to the RDF model even though it is not explicit in the XML.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://example.org/" xmlns:xlink="http://www.w3.org/1999
+      /xlink">
+        <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink
+      .xsd" />
+
+        <xs:element name="link">
+                <xs:complexType>
+                        <xs:attributeGroup ref="xlink:simpleLink"/>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+\begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/1999/xlink}{\tt http://www.w3.org/1999/xlink}
+\end{DoxySeeAlso}
+\hypertarget{list_annotationChildren}{}\subsubsection{Child components}\label{list_annotationChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{attribute}{attribute}
+\item \hyperlink{attributegroup}{attributeGroup}
+\item \hyperlink{anyattribute}{anyAttribute} 
+\end{DoxyItemize}\hypertarget{choice}{}\subsection{choice}\label{choice}
+The choice compositor determines how property cardinalities are derived. Because only one choice may occur, each has a minimum cardinality of 0. The maximum is set by maxOccurs. These values are multiplied by the cardinalities of nested components to produce the derived cardinailities.
+
+In the following example, the minimum cardinailites of both 'foo' and 'bar' are multipled by 0, so there is no minimum restriction on either property. In addition, 'foo' has no maximum limit so foo is unconstrained in the range of 'foobar'. Property 'bar' retains it's default cardinality of 1.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foobar">
+                <xs:complexType>
+                        <xs:choice>
+                                <xs:element name="foo" maxOccurs="unbounded"/>
+                                <xs:element name="bar" />
+                        </xs:choice>
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The minimum cardinality of 'foo' is 0$\ast$1. The maximum cardinality of 'foo' is 1$\ast$unbounded. This has the interesting, and perhaps counter-\/intuitive, effect that no restrictions on 'foo' are defined in the class definition.
+
+The minimum cardinality of 'bar' is 0$\ast$1. The maximum cardinality of 'bar' is 1$\ast$1.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/choice.owl>
+      a       owl:Ontology .
+
+ns1:bar
+      a       rdf:Property .
+
+ns1:foobar
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xs_:int ;
+                          owl:onProperty ns1:bar
+                        ]
+              ] .
+
+ns1:foo
+      a       rdf:Property .
+\end{DoxyCodeInclude}
+\hypertarget{sequence_sequenceChildren}{}\subsubsection{Child components}\label{sequence_sequenceChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{element}{element}
+\item \hyperlink{sequence}{sequence}
+\item \hyperlink{choice}{choice}
+\item \hyperlink{group}{group}
+\item \hyperlink{any}{any} 
+\end{DoxyItemize}\hypertarget{complexContent}{}\subsection{complexContent}\label{complexContent}
+\hypertarget{element_elementChildren}{}\subsubsection{Child components}\label{element_elementChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{restriction}{restriction}
+\item \hyperlink{extension}{extension} 
+\end{DoxyItemize}\hypertarget{complexType}{}\subsection{complexType}\label{complexType}
+The only complex type predefined in XML schema is anyType, the default type for elements, and a super-\/class of any user-\/defined type. The nearest analogue is RDF Resource. User defined complex types correspond to OWL classes which may be anonymous, globally qualified by the target namespace, or locally named and defined in a default namespace. For complex types with mixed or simple content, we model these as restrictions on its RDF value.
+
+Global, named complex types are defined in the target namespace. The following schema defines a complex type, $<$\href{http://example.org/Foo}{\tt http://example.org/Foo}$>$.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+        <xs:complexType name="Foo" />
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns2:Foo
+      a       owl:Class .
+
+<http://example.org/complexType1.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+
+
+If the target namespace ends with an alpha-\/numeric, a fragment separator '\#' is introduced.
+
+For locally defined elements we derive value (OWL allValuesFrom) restrictions from their type. A complex type defines a content model (particle) for element content. For global elements the type is set by the property range. The Russian Doll style of schema mirrors the structure of the XML instance document. Short on references to global definitions, we see attributes \& elements defined in-\/situ (locally), where names are easily recycled. We might foresee a problem with different appearances of an element within the particle having different types. However, the Element Declarations Consistent constraint limits elements within the same particle to be of the same type. This permits us to construct an allValuesFrom restriction based only on the first appearance of an element within a particle.
+
+This example also shows the definition of a property range based on an anonymous complex type. It also shows how simple content is captured in the form of an rdf:value. In this case the element value can appear at most once. If the element is empty the value isn't added.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+        <xs:element name="foo">
+                <xs:complexType>
+                        <xs:simpleContent>
+                                <xs:restriction base="xs:string"/>
+                        </xs:simpleContent>
+                </xs:complexType>
+        </xs:element>
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+rdf:value
+      a       rdf:Property , owl:DatatypeProperty .
+
+<http://example.org/complexType2.owl>
+      a       owl:Ontology .
+
+ns2:foo
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xs_:int ;
+                          owl:onProperty rdf:value
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xs_:string ;
+                          owl:onProperty rdf:value
+                        ]
+              ] .
+\end{DoxyCodeInclude}
+
+
+Instances of this in both XML and RDF are as follows:
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foo xmlns="http://example.org/">foobar</foo>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/complexType2.xml>
+      ns2:foo [ rdf:value "foobar"^^xs_:string
+              ] .
+\end{DoxyCodeInclude}
+
+
+We may add attributes to a complex type either directly as in the example below (or as part of an attribute group), or within nested restrictions or extensions.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+        <xs:complexType name="Foo">
+                <xs:attribute name="bar" type="xs:string" />
+        </xs:complexType>
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The attribute 'bar' is unqualified, so the corresponding property is defined in the default namespace (xmlns=http://example.org/def/).
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns2:Foo
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xs_:string ;
+                owl:onProperty ns1:bar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:maxCardinality "1"^^xs_:int ;
+                owl:onProperty ns1:bar
+              ] .
+
+<http://example.org/complexType3.owl>
+      a       owl:Ontology .
+
+ns1:bar
+      a       rdf:Property , owl:DatatypeProperty .
+\end{DoxyCodeInclude}
+
+
+We can add structured content to a complex type, using the compositors, 'all', 'choice', 'sequence', and sometimes 'group'. These don't add any nested structure to the class itself but are used to determine the cardinalities of any added properties.\hypertarget{complextype_complexTypeChildren}{}\subsubsection{Child components}\label{complextype_complexTypeChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{simplecontent}{simpleContent}
+\item \hyperlink{complexcontent}{complexContent}
+\item \hyperlink{group}{group}
+\item \hyperlink{all}{all}
+\item \hyperlink{choice}{choice}
+\item \hyperlink{sequence}{sequence}
+\item \hyperlink{attribute}{attribute}
+\item \hyperlink{attributegroup}{attributeGroup}
+\item \hyperlink{anyattribute}{anyAttribute}
+\item \hyperlink{annotation}{annotation} 
+\end{DoxyItemize}\hypertarget{documentation}{}\subsection{Documentation}\label{documentation}
+Documentation on a schema, element, attribute or complex type is recorded as rdfs:comment. Documentation for the schema is added to the owl:Ontology header. Documentation for a complex type is added to the corresponding class. Documentation for an element or attribute is added to the corresponding property.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:annotation>
+                <xs:documentation>annotated schema</xs:documentation>
+        </xs:annotation>
+        
+        <xs:attribute name="attribute" >
+                <xs:annotation>
+                        <xs:documentation xml:lang="en">annotated attribute</xs:d
+      ocumentation>
+                </xs:annotation>
+        </xs:attribute>
+
+        <xs:element name="element" type="ComplexType">
+                <xs:annotation>
+                        <xs:documentation xml:lang="en">annotated element</xs:doc
+      umentation>
+                </xs:annotation>
+        </xs:element>
+
+        <xs:complexType name="ComplexType">
+                <xs:annotation>
+                        <xs:documentation xml:lang="en">annotated type</xs:docume
+      ntation>
+                </xs:annotation>
+        </xs:complexType>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The translation into OWL is as follows:
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/documentation.owl>
+      a       owl:Ontology ;
+      rdfs:comment "annotated schema" .
+
+ns1:element
+      a       owl:ObjectProperty ;
+      rdfs:comment "annotated element"@en ;
+      rdfs:range ns1:ComplexType .
+
+ns1:ComplexType
+      a       owl:Class ;
+      rdfs:comment "annotated type"@en .
+
+ns1:attribute
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:comment "annotated attribute"@en ;
+      rdfs:range rdfs:Literal .
+\end{DoxyCodeInclude}
+ \hypertarget{element}{}\subsection{element}\label{element}
+Elements map to RDF properties. An instance of an element maps to an RDF statement. A qualified element is defined in the target namespace of the schema, as is the corresponding RDF property. Where an element has a complex type we define a corresponding OWL ObjectProperty. Where an attribute or element has an RDF recommended simple type we define a corresponding OWL DatatypeProperty. Attribute and elements of non-\/recommended simple types form a grey zone with literal types (anySimpleType and ENTITY) still requiring a DatatypeProperty, but the URI (QName, NOTATION, IDREF) and structured types (duration, ENTITIES, IDREFS, NMTOKENS) switch; demanding an ObjectProperty. Where content has a named type (or if there is an explicit xsi:type) this is represented by an rdf:type statement on the node.
+
+e.g. for target namespace \href{http://example.org/}{\tt http://example.org/} and element named 'foo', the RDF property name is \href{http://example.org/foo}{\tt http://example.org/foo}
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:element name="foo" type="xs:string" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The OWL mapping was produced with lang=N3. This shows the property definition for 'foo'. It is a datatype property ranging over xs:string.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns2:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+
+<http://example.org/element1.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+
+
+Where the target namespace ends with an alphanumeric character, a fragment separator is introduced. e.g. for target namespace \href{http://example.org}{\tt http://example.org} and element named 'foo', the RDF property name is \href{http://example.org#foo}{\tt http://example.org\#foo}
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org">
+        <xs:element name="foo" type="xs:string" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+This OWL was produced with lang=N3
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/element2.owl>
+      a       owl:Ontology .
+
+ns2:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+\end{DoxyCodeInclude}
+
+
+Unqualified elements are not defined in the target namespace, but the mapping to RDF requires an absolute URI. Unqualified elements occur if no target namespace is defined, or if an element is declared locally and its form is unqualified. The properties corresponding to unqualified elements will be declared in the user-\/defined default namespace (xmlns) of the schema. This is a command line parameter (not the xmlns defined on the document element).
+
+e.g. for default namespace \href{http://example.com/def/}{\tt http://example.com/def/} and unqualified element named 'foo', the RDF property name is \href{http://example.org/def/foo}{\tt http://example.org/def/foo}
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:element name="foo" type="xs:string" />
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The OWL mapping was produced with lang=N3 and xmlns=http://example.com/def/
+
+
+\begin{DoxyCodeInclude}
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/element3.owl>
+      a       owl:Ontology .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+\end{DoxyCodeInclude}
+
+
+In xml schema, elements have their own symbol space, distinct from other components such as attributes and types. If there are overlaps between these symbol spaces, it is advisable to introduce a symbolic prefix to keep them distinct.
+
+e.g. the element named 'foo' and type named 'foo' in the target namespace \href{http://example.org/}{\tt http://example.org/} will clash. Introducing a symbolic prefix '$\sim$' (at the command line) for elements resolves the clash giving us an RDF property name \href{http://example.org/~foo.}{\tt http://example.org/$\sim$foo.}
+
+The OWL mapping below was generated from the first schema above, but with element=$\sim$
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/element4.owl>
+      a       owl:Ontology .
+
+<http://example.org/~foo>
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+\end{DoxyCodeInclude}
+\hypertarget{element_Type}{}\subsubsection{Type}\label{element_Type}
+An element may have a simple or complex type. On the whole, simple typed elements map to OWL datatype properties (exceptions include most of the datatypes that don't have a clean mapping into RDF); while complex typed elements map to object properties.
+
+The schema below defines a simple typed property 'foo' and a complex type property 'bar'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/">
+        
+        <xs:element name="foo" type="xs:string" />
+        
+        <xs:element name="bar">
+                <xs:complexType mixed="true" />
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+With a corresponding OWL mapping:
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/element5.owl>
+      a       owl:Ontology .
+
+ns1:bar
+      a       owl:ObjectProperty .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+\end{DoxyCodeInclude}
+
+
+An element may reference or directly include a simple type declaration.\hypertarget{element_elementChildren}{}\subsubsection{Child components}\label{element_elementChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{simpletype}{simpleType}
+\item \hyperlink{complextype}{complexType}
+\item \hyperlink{annotation}{annotation} 
+\end{DoxyItemize}\hypertarget{enumeration}{}\subsection{enumeration}\label{enumeration}
+XML schema also allows a simple type restriction to be defined by enumeration. OWL Enumerations allow classes to be defined extensionally, in terms of their membership. For data-\/types, the class of values is specified as an OWL DataRange, with OWL oneOf listing the permitted range of values.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="data">
+                <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                                <xs:enumeration value="0"/>
+                                <xs:enumeration value="1"/>
+                        </xs:restriction>
+                </xs:simpleType>
+        </xs:element>
+
+        <xs:element name="objects">
+                <xs:simpleType>
+                        <xs:restriction base="xs:QName">
+                                <xs:enumeration value="foo"/>
+                                <xs:enumeration value="bar"/>
+                        </xs:restriction>
+                </xs:simpleType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+Because xs:QNames are not recommended for use in RDF (they depend on locally defined prefixes) they are fully expanded to form absolute URIs. The QNames that appear in the schema are unprefixed and so are defined in the default XML namespace.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/enumeration.owl>
+      a       owl:Ontology .
+
+ns1:data
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range
+              [ a       owl:DataRange ;
+                owl:oneOf ("0"^^xs_:int "1"^^xs_:int)
+              ] .
+
+ns1:objects
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                owl:oneOf (ns1:foo ns1:bar)
+              ] .
+\end{DoxyCodeInclude}
+ \hypertarget{extension}{}\subsection{extension}\label{extension}
+The term 'extension' as used in XML schema is not used in its formal, mathematical sense. Rather than defining a superset of valid instances, an extension describes a different, possibly intersecting set of instances that structurally extend the base type. In many cases an extension will describe a valid sub-\/class, but there are cases where this does not hold. In the valid cases we assert a subClassOf relationship. If we use extensions simply to add new elements and attributes to an existing type we have nothing to worry about. The problems arise by adding additional occurrences of existing elements.
+
+
+\begin{DoxyItemize}
+\item \hyperlink{extensioncomplexcontent}{Extension of Complex Content} 
+\end{DoxyItemize}\hypertarget{extensionComplexContent}{}\subsubsection{Extension of Complex Content}\label{extensionComplexContent}
+Rather than defining a superset of valid instances an extension describes a different, possibly intersecting set of instances that structurally extend the base type. In many cases the extension will describe a valid subclass of the parent, and in these cases \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} will assert a subClass relationship.
+
+The schema below defines a class 'Foo' with a single element 'foo', and two extensions of it. If we use extensions simply to add new elements and attributes we have nothing to worry about. The first type 'FooBar' adds a new element 'bar'. The latter type 'FooFoo' extends the base type by adding another occurrence of 'foo'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foo">
+                <xs:complexType />
+        </xs:element>
+
+        <xs:element name="bar">
+                <xs:complexType />
+        </xs:element>
+        
+        <xs:complexType name="Foo">
+                <xs:sequence>
+                        <xs:element ref="foo"/>
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="FooBar">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="bar"/>
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+        
+        <xs:complexType name="FooFoo">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="foo"/>
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>       
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The first extension 'FooBar' results in a valid subClass relationship, with each element having cardinality 1. The latter class 'FooFoo' is not a valid subClass, the cardinality of foo is 2, so the minimum cardinality (2) from the child is greater than the maximum cardinality (1) inherited from the parent. Because this interval is empty, the class 'FooFoo' is unsatisfiable.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:Foo
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+
+ns1:bar
+      a       rdf:Property , owl:ObjectProperty .
+
+ns1:FooBar
+      a       owl:Class ;
+      rdfs:subClassOf ns1:Foo ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:bar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+
+ns1:foo
+      a       rdf:Property , owl:ObjectProperty .
+
+<http://example.org/extension.owl>
+      a       owl:Ontology .
+
+ns1:FooFoo
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "2"^^xs_:int ;
+                owl:onProperty ns1:foo
+              ] .
+\end{DoxyCodeInclude}
+
+
+Invalid subClass relationships are detected logically, by asserting the hypothetical relationship and seeing if it results in an inconsistency. If it does -\/ the subclass relationship is retracted. In the next section we will see why schema that use extension in particular ways must be defined in terms of their necessary and sufficient conditions.\hypertarget{extensioncomplexcontent_badExtensions}{}\paragraph{When extensions go bad}\label{extensioncomplexcontent_badExtensions}
+Unfortunately, a minor change to this example turns this violation into something far nastier. In the example below, we change the type of element 'foo' from an object to a datatype property (an xs:string). A valid instance of 'FooFoo' will include two occurrences of 'foo' with {\itshape identical\/} values. When this is mapped into RDF, these count as a single logical statement, so a valid instance may have a cardinality for 'foo' of 1. Of course we still have the typical case where each occurrence has a different value, with a cardinality of foo of 2. So the cardinality of 'foo' in 'FooFoo' lies in the interval \mbox{[}1,2\mbox{]}. The cardinality of 'foo' in class 'Foo' is 1, as before.
+
+The previous line of reasoning now fails, as the minimum cardinality of the child (1) no longer crosses the maximum cardinality of the parent (1). Nor is it valid to argue that the maximum cardinality of the child (2) is greater than the maximum cardinality of the child (1), in effect widening the definition. The child is defined only in terms of its necessary conditions, and taking the intersection with its parent we still end up with a satisfiable class with a cardinality for 'foo' of 1.
+
+It turns out that 'FooFoo' is a valid subclass of 'Foo' only because of those errant instances where 'foo' has identical values. It's unlikely that this is the meaning of 'FooFoo' intended by the schema author, especially as this particular implication remains implicit. One solution to this problem is to define classes in terms of their necessary and {\itshape sufficient\/} conditions, meaning that any instance satisfying the conditions is a member by definition. We express necessary and sufficient conditions in OWL by defining classes as an intersectionOf a set of restrictions.
+
+We reason {\itshape semantically\/} as follows. Because to be a member of 'FooFoo' it is sufficient to have a cardinality of 'foo' of no more than 2, there must be a valid instance of 'FooFoo' with exactly 2 'foo' properties. This individual can't be a model of 'Foo' because this has a maximum cardinality for 'foo' of 1. If 'FooFoo' were a subClass of 'Foo' then every model of 'FooFoo' must also be a model of 'Foo'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foo" type="xs:string" />
+                
+        <xs:complexType name="Foo">
+                <xs:sequence>
+                        <xs:element ref="foo" />
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="FooFoo">
+                <xs:complexContent>
+                        <xs:extension base="Foo">
+                                <xs:sequence>
+                                        <xs:element ref="foo" />
+                                </xs:sequence>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>       
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} mapping is invoked with class=intersectionOf. The logical inconsistency is detected and the subClass relationship between 'FooFoo' and 'Foo' is correctly retracted.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/extension1.owl>
+      a       owl:Ontology .
+
+ns1:Foo
+      a       owl:Class ;
+      owl:intersectionOf ([ a       owl:Restriction ;
+                  owl:cardinality "1"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ]) .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xs_:string .
+
+ns1:FooFoo
+      a       owl:Class ;
+      owl:intersectionOf ([ a       owl:Restriction ;
+                  owl:minCardinality "1"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ] [ a       owl:Restriction ;
+                  owl:maxCardinality "2"^^xs_:int ;
+                  owl:onProperty ns1:foo
+                ]) .
+\end{DoxyCodeInclude}
+ \hypertarget{group}{}\subsection{group}\label{group}
+The group component allows groups of elements to be combined into reusable groups. From a modelling perspective we regard them as syntactic sugar with no counterpart in OWL. However, group references act like compositors in that they allow the schema designer to indicate how many times the group may occur.
+
+The minimum and maximum occurrences of the group reference are multiplied by the cardinalities of the group members. In the example below, the element 'barfoo' references a group that has no occurrences.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:group name="myGroup">
+                <xs:all>
+                        <xs:element name="foo" />
+                </xs:all>
+        </xs:group>
+        
+        <xs:element name="barfoo">
+                <xs:complexType>
+                        <xs:group ref="myGroup" minOccurs="0" maxOccurs="0" />
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:foo
+      a       rdf:Property .
+
+ns1:barfoo
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "0"^^xs_:int ;
+                          owl:onProperty ns1:foo
+                        ]
+              ] .
+
+<http://example.org/group.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+\hypertarget{group_groupChildren}{}\subsubsection{Child components}\label{group_groupChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{sequence}{sequence}
+\item \hyperlink{choice}{choice}
+\item \hyperlink{all}{all} 
+\end{DoxyItemize}\hypertarget{import}{}\subsection{Import}\label{import}
+If a schema imports a schema then that schema is automatically loaded. When lifting a schema to OWL, a corresponding owl:imports is generated. The URI used in the import is base relative.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        <xs:import namespace="http://example.com/" schemaLocation="example.xsd" /
+      >
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/import.owl>
+      a       owl:Ontology ;
+      owl:imports <http://example.org/example.owl> .
+\end{DoxyCodeInclude}
+ \hypertarget{include}{}\subsection{Include}\label{include}
+If a schema includes a schema then that schema is automatically loaded. When lifting a schema to OWL, a corresponding owl:imports is generated. The URI used in the import is base relative.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+        <xs:include schemaLocation="example.xsd" />
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/include.owl>
+      a       owl:Ontology ;
+      owl:imports <http://example.org/example.owl> .
+\end{DoxyCodeInclude}
+ \hypertarget{list}{}\subsection{list}\label{list}
+An xs:list is mapped into an rdf:List. Lists assume whitespace separated content in the XML instance. In the case of lists of xs:string, the string value is separated into separate string tokens.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<list xmlns="http://example.org/">
+        foo
+        bar
+</list>
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/list.xml>
+      ns2:list ("foo"^^xs_:string "bar"^^xs_:string) .
+\end{DoxyCodeInclude}
+
+
+The mapping into OWL does not currently define lists for specific datatypes.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" >
+
+        <xs:element name="list">        
+                <xs:simpleType>
+                        <xs:list itemType="xs:string"/>
+                </xs:simpleType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/list.owl>
+      a       owl:Ontology .
+
+ns2:list
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range rdf:List .
+\end{DoxyCodeInclude}
+\hypertarget{list_annotationChildren}{}\subsubsection{Child components}\label{list_annotationChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{annotation}{annotation}
+\item \hyperlink{simpletype}{simpleType} 
+\end{DoxyItemize}\hypertarget{redefine}{}\subsection{redefine}\label{redefine}
+This component is similar to include but also allows types and groups to be completely redefined. There is no comparable feature in OWL, so we simply include the new definitions as they appear in the redefinition. Because we can't selectively import things that are not redefined, anything unaffected by the redefinition is defined directly within the redefining ontology, rather than being imported. In effect, the redefinitions shadow only the affected schema components.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:redefine schemaLocation="redefined.xsd">
+                <xs:simpleType name="Foo">
+                        <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+        </xs:redefine>
+        
+        <xs:element name="foo" type="Bar" />
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+This schema includes a type 'Foo' that is redefined, becoming a string; and a type 'Bar' that is unchanged.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/" 
+        xmlns="http://example.org/" elementFormDefault="qualified">
+        
+        <xs:simpleType name="Foo">
+                <xs:restriction base="xs:anySimpleType" />
+        </xs:simpleType>
+
+        <xs:complexType name="Bar">
+                <xs:simpleContent>
+                        <xs:restriction base="Foo" />
+                </xs:simpleContent>
+        </xs:complexType>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:Foo
+      a       owl:Class ;
+      rdfs:subClassOf xs_:string .
+
+ns1:Bar
+      a       owl:Class .
+
+ns1:foo
+      a       owl:ObjectProperty ;
+      rdfs:range ns1:Bar .
+
+<http://example.org/redefine.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+\hypertarget{redefine_redefineChildren}{}\subsubsection{Child components}\label{redefine_redefineChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{simpletype}{simpleType}
+\item \hyperlink{complextype}{complexType}
+\item \hyperlink{group}{group}
+\item \hyperlink{attributegroup}{attributeGroup} 
+\end{DoxyItemize}\hypertarget{restriction}{}\subsection{restriction}\label{restriction}
+New simple types can be derived by restriction. If a complex type is a restriction of another type we can derive a subclass relationship between them. Restrictions are easier to translate into OWL than extensions because they only add new constraints, thereby reducing the set of valid instances. The occurrences of elements and attributes may be reduced (though not below the minimum of the parent class) and their types may be narrowed. A restriction defines a subset of instances of its base type. OWL may be used to declare restrictions of simple types but is not able to define constraints on the new value space other than by enumeration.
+
+
+\begin{DoxyItemize}
+\item \hyperlink{restrictioncomplexcontent}{Restriction of Complex Content} 
+\end{DoxyItemize}\hypertarget{restrictionComplexContent}{}\subsubsection{Restriction of complex content}\label{restrictionComplexContent}
+Restrictions are easier to map because they only add new constraints, thereby reducing the set of valid instances. The occurrences of elements and attributes may be reduced (though not below the minimum of the parent class) and their types may be narrowed.
+
+In the example below, the complex type 'Bar' restricts 'Foo' by reducing the number of occurrences of element 'foo' from unbounded to 1; by narrowing the type from xs:anySimpleType to xs:string; and by disallowing mixed content.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:complexType name="Bar" mixed="true">
+                <xs:sequence maxOccurs="unbounded">
+                        <xs:element name="foobar" type="xs:anySimpleType" />
+                </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="Foo">
+                <xs:complexContent>
+                        <xs:restriction base="Bar">
+                                <xs:sequence>
+                                        <xs:element name="foobar" type="xs:string
+      " />
+                                </xs:sequence>
+                        </xs:restriction>
+                </xs:complexContent>
+        </xs:complexType>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} assumes correctness of the schema and asserts the subclass relationship without further checks.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:Foo
+      a       owl:Class ;
+      rdfs:subClassOf ns1:Bar ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom xs_:string ;
+                owl:onProperty ns1:foobar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:cardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foobar
+              ] .
+
+<http://example.org/restriction.owl>
+      a       owl:Ontology .
+
+ns1:Bar
+      a       owl:Class ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:allValuesFrom rdfs:Literal ;
+                owl:onProperty ns1:foobar
+              ] ;
+      rdfs:subClassOf
+              [ a       owl:Restriction ;
+                owl:minCardinality "1"^^xs_:int ;
+                owl:onProperty ns1:foobar
+              ] .
+
+ns1:foobar
+      a       rdf:Property , owl:DatatypeProperty .
+\end{DoxyCodeInclude}
+ \hypertarget{sequence}{}\subsection{sequence}\label{sequence}
+Compositors like xs:sequence are not represented in OWL because they are primarily concerned with the lexical form of a document. However, they are used to derive restrictions on the cardinality of individual properties appearing within a class. Cardinalities involving xs:sequence are derived by multiplying all nested cardinalities by the minimum and maximum number of occurences of that sequence. By default the minimum and maximum are 1, leaving the nested cardinalities unchanged.
+
+The example below demonstrates this multiplication at work. Element 'foo' has the default cardinality of 1. It's containing sequence has a minimum occurence of 0, so we derive a minimum cardinality of 1$\ast$0=0 on 'foo'. From the default maximum (1) we derive a maximum cardinality on 'foo' of 1$\ast$1=1. A minimum of 0 is no constraint at all, so only the maximum cardinality restriction appears in the OWL.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://example.org/" xmlns="http://example.org/"
+        elementFormDefault="qualified">
+        
+        <xs:element name="foo" />
+        <xs:element name="bar" />
+        
+        <xs:element name="foobar">
+                <xs:complexType>
+                        <xs:sequence minOccurs="0">
+                                <xs:element ref="foo" />
+                                <xs:element ref="bar" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The element 'bar' is a little more interesting, having an unbounded number of occurrences and a default minimum cardinality of 1. The derived maximum cardinality is 1$\ast$unbounded=unbounded, and in effect unrestricted. Similarly, the derived minimum cardinality is 0$\ast$1=0, also unrestricted. There are therefore no cardinality restrictions on element 'bar'. The, possibly counter-\/intuitive, result is that 'bar' does not appear in the class definition.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:bar
+      a       rdf:Property .
+
+ns1:foobar
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xs_:int ;
+                          owl:onProperty ns1:foo
+                        ]
+              ] .
+
+ns1:foo
+      a       rdf:Property .
+
+<http://example.org/sequence.owl>
+      a       owl:Ontology .
+\end{DoxyCodeInclude}
+
+
+Note that the default type of elements 'foo' and 'bar' is xs:anyType, which is effectively unconstrained hence there are no ranges defined for either property. Also, because xs:anyType is a super-\/class of xs:anySimpleType, it is unknown whether or not 'foo' and 'bar' are object or datatype properties (or both).\hypertarget{sequence_sequenceChildren}{}\subsubsection{Child components}\label{sequence_sequenceChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{element}{element}
+\item \hyperlink{choice}{choice}
+\item \hyperlink{sequence}{sequence}
+\item \hyperlink{any}{any}
+\item \hyperlink{group}{group} 
+\end{DoxyItemize}\hypertarget{simpleContent}{}\subsection{simpleContent}\label{simpleContent}
+Simple content lets us add attributes to an element that otherwise has content representing a single value.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foo xmlns="http://example.org/" bar="bar">foo</foo>
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        
+        <xs:element name="foo">
+                <xs:complexType>
+                        <xs:simpleContent>
+                                <xs:extension base="xs:string"/>
+                        </xs:simpleContent>
+                        <xs:attribute name="bar" />
+                </xs:complexType>
+        </xs:element>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+Note how the content and named properties derived from attributes share the same subject. The content is differentiated from attributes by the use of the rdf:value property.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/simpleContent.xml>
+      ns2:foo [ rdf:value "foo"^^xs_:string ;
+                ns1:bar "bar"
+              ] .
+\end{DoxyCodeInclude}
+\hypertarget{simplecontent_simpleContentChildren}{}\subsubsection{Child components}\label{simplecontent_simpleContentChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{annotation}{annotation}
+\item \hyperlink{restriction}{restriction}
+\item \hyperlink{extension}{extension} 
+\end{DoxyItemize}\hypertarget{simpleType}{}\subsection{simpleType}\label{simpleType}
+New simple types can be derived by restriction. OWL can define new sub-\/classes of datatypes but is not able to define constraints on the new value space other than by enumeration. Simple types are therefore declared in OWL, but not defined to the same extent as in XML schema.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/" >
+        
+        <xs:simpleType name="mySimpleType">
+                <xs:restriction base="xs:string" />
+        </xs:simpleType>
+
+        <xs:element name="foo" type="mySimpleType" />
+
+</xs:schema>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:foo
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range ns1:mySimpleType .
+
+<http://example.org/simpleType1.owl>
+      a       owl:Ontology .
+
+ns1:mySimpleType
+      a       owl:Class ;
+      rdfs:subClassOf xs_:string .
+\end{DoxyCodeInclude}
+
+
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} avoids using simple types in typed literals by instead using the datatype it is derived from. In the XML instance and below the lifted value 'bar' has type xs:string rather than the user-\/defined simple type 'mySimpleType'.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foo xmlns="http://example.org/">bar</foo>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/def/> .
+@prefix ns1:     <http://example.org/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/simpleType1.xml>
+      ns1:foo "bar"^^xs_:string .
+\end{DoxyCodeInclude}
+\hypertarget{simpletype_simpleTypeChildren}{}\subsubsection{Child components}\label{simpletype_simpleTypeChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{restriction}{restriction}
+\item \hyperlink{list}{list}
+\item \hyperlink{union}{union} 
+\end{DoxyItemize}\hypertarget{union}{}\subsection{union}\label{union}
+Union datatypes merge the lexical spaces of several existing types to create another. Because OWL does not currently support user-\/defined datatypes, \hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} uses only the union member types to define datatyped literals.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<union xmlns="http://example.org/">foobar</union>
+
+\end{DoxyCodeInclude}
+
+
+This XML conforms to the schema below. The content is either an xs:int or an xs:string.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ex
+      ample.org/">
+        
+        <xs:element name="union">
+                <xs:simpleType>
+                        <xs:union memberTypes="xs:int xs:string" />
+                </xs:simpleType>
+        </xs:element>
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The XML content is validated against both xs:int and xs:string to determine its type. In this case it is an xs:string.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/union.xml>
+      ns2:union "foobar" .
+\end{DoxyCodeInclude}
+
+
+There's little to say about the range of the property. A simple type may sometimes map to an object type (e.g. QNames), so a union is not necessarily a datatype property. In this case, both member types map to datatype properties so 'union' is a datatype property.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/union.owl>
+      a       owl:Ontology .
+
+ns2:union
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                owl:unionOf (xs_:string xs_:int)
+              ] .
+\end{DoxyCodeInclude}
+\hypertarget{union_unionChildren}{}\subsubsection{Child components}\label{union_unionChildren}
+
+\begin{DoxyItemize}
+\item \hyperlink{annotation}{annotation}
+\item \hyperlink{simpletype}{simpleType} 
+\end{DoxyItemize}\hypertarget{whiteSpace}{}\subsection{whiteSpace}\label{whiteSpace}
+WhiteSpace processing is a contentious area of XML and is one of the main reasons why round-\/tripping XML produces an output that is (semantically) equivalent rather than (lexically) identical to the original. The following example demonstrates three ways to control whitespace processing. It inlcudes an element 'foobar' with liberally spaced mixed content interspersed with sub-\/elements 'foo' and 'bar' both with content containing leading (tabbed) indentation.
+
+The whitespace processing of element 'foo' is determined by the xml:space attribute which indicates that whitespace should be collapsed; trimming the leading whitespace. The whitespace processing of element 'bar' is determined by the 'whiteSpace' restriction in the schema, which is also set to collapse whitespace.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foobar xmlns="http://example.org/">
+        foo
+        bar
+        <foo xml:space="collapse">
+        foo
+        </foo>
+        
+        <bar>
+        bar
+        </bar>
+        foo             bar
+</foobar>
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://example.org/" xmlns="http://example.org/">
+
+        <xs:element name="foobar">
+        <xs:complexType mixed="true">
+                <xs:sequence>
+                        <xs:element ref="foo" />
+                        <xs:element ref="bar" />
+                </xs:sequence>
+        </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="foo" type="xs:string" />
+        
+        <xs:element name="bar">
+                <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                                <xs:whiteSpace value="collapse" />
+                        </xs:restriction>
+                </xs:simpleType>
+        </xs:element>
+        
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+Finally, the \hyperlink{namespacecom_1_1hp_1_1gloze}{gloze} parameter space may be set to 'preserve' or 'default', equivalent to setting xml:space in the document element. Mapping to RDF with space=default, then round-\/tripping back into XML we get the following (equivalenmt but not identical to the original).
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:foobar xmlns:ns1="http://example.org/">foo bar<ns1:foo>foo</ns1:foo>
+    <ns1:bar>bar</ns1:bar>foo bar</ns1:foobar>
+\end{DoxyCodeInclude}
+ 

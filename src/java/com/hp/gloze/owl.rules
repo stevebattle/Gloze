@@ -1,0 +1,123 @@
+@prefix gloze: <http://www.hp.com/gloze#>.
+
+#[restriction3: (?C rdf:type owl:Restriction), (?C owl:onProperty ?P), (?C owl:minCardinality ?X)
+#	-> (?C owl:equivalentClass min(?P, ?X)) ]
+						
+#[restriction4: (?C rdf:type owl:Restriction), (?C owl:onProperty ?P), (?C owl:maxCardinality ?X)
+#	-> (?C owl:equivalentClass max(?P, ?X)) ]
+
+#[restriction5a: (?C rdf:type owl:Restriction), (?C owl:onProperty ?P), (?C owl:cardinality ?X)
+#	-> (?C owl:equivalentClass card(?P, ?X)) ]
+
+[restriction0: 
+	(?S rdfs:subClassOf ?R), (?R rdf:type owl:Restriction), (?R owl:onProperty ?P), 
+	(?R owl:minCardinality ?X) -> (?S rdfs:subClassOf min(?P,?X)) ]
+
+[restriction1: 
+	(?S rdfs:subClassOf ?R), (?R rdf:type owl:Restriction), (?R owl:onProperty ?P), 
+	(?R owl:maxCardinality ?X) -> (?S rdfs:subClassOf max(?P,?X)) ]
+
+[restriction2: 
+	(?S rdfs:subClassOf ?R), (?R rdf:type owl:Restriction), (?R owl:onProperty ?P), 
+	(?R owl:cardinality ?X) -> (?S rdfs:subClassOf min(?P,?X)), (?S rdfs:subClassOf max(?P,?X)) ]
+	
+# propagate property names back to the tail
+
+[listInit0: (?S rdfs:subClassOf ?S1), notEqual(?S, ?S1), noValue(?S, rdf:type, gloze:OK),
+	(?S owl:intersectionOf ?L), (?S1 owl:intersectionOf ?L1),
+	(?L rdf:first ?R), (?L1 rdf:first ?R1),
+	(?R owl:onProperty ?P), (?R1 owl:onProperty ?P1)
+	-> (?L gloze:property ?P), (?L1 gloze:property ?P1) ]
+
+[listInit1: (?L rdf:first ?H), (?L rdf:rest ?T), (?L gloze:property ?P), (?H owl:onProperty ?Q), notEqual(?P,?Q)
+	-> (?L gloze:property ?Q) ]
+
+[listInit2: (?L gloze:property ?P), (?L rdf:rest ?T), notEqual(?T, rdf:nil)
+	-> (?T gloze:property ?P) ]
+
+
+# propagate constraints from the tail to the head (using known property names)
+
+[listNil0: (?L rdf:first ?H), (?L rdf:rest rdf:nil), (?L gloze:property ?P), 
+	(?H owl:allValuesFrom ?), (?H owl:onProperty ?P),
+	-> (?L gloze:bounds openInterval(?P,0)) ]
+
+[listNil1: (?L rdf:first ?H), (?L rdf:rest rdf:nil), (?L gloze:property ?P),
+	(?H owl:minCardinality ?C), (?H owl:onProperty ?P), 
+	-> (?L gloze:bounds openInterval(?P,?C)) ]
+
+[listNil2: (?L rdf:first ?H), (?L rdf:rest rdf:nil), (?L gloze:property ?P),
+	(?H owl:maxCardinality ?C), (?H owl:onProperty ?P),
+	-> (?L gloze:bounds interval(?P,0,?C)) ]
+
+[listNil3: (?L rdf:first ?H), (?L rdf:rest rdf:nil), (?L gloze:property ?P),
+	(?H owl:cardinality ?C), (?H owl:onProperty ?P),
+	-> (?L gloze:bounds interval(?P,?C,?C)) ]
+	
+
+[listSkip0: (?L rdf:first ?H), (?L rdf:rest ?T), (?H owl:allValuesFrom ?), (?T gloze:bounds ?B)
+	-> (?L gloze:bounds ?B) ]
+
+[listSkip1: (?L rdf:first ?H), (?L rdf:rest ?T), (?H owl:onProperty ?Q)
+	(?T gloze:bounds openInterval(?P,?MIN)), notEqual(?P,?Q)
+	-> (?L gloze:bounds openInterval(?P,?MIN)) ]
+
+[listSkip2: (?L rdf:first ?H), (?L rdf:rest ?T), (?H owl:onProperty ?Q)
+	(?T gloze:bounds interval(?P,?MIN,?MAX)), notEqual(?P,?Q)
+	-> (?L gloze:bounds interval(?P,?MIN,?MAX)) ]
+
+
+[listMin1: (?L rdf:first ?H), (?H owl:minCardinality ?C), (?H owl:onProperty ?P),
+	(?L rdf:rest ?T), (?T gloze:bounds openInterval(?P,?MIN)), max(?C,?MIN,?MIN1) 
+	-> (?L gloze:bounds openInterval(?P,?MIN1)) ]
+
+[listMin2: (?L rdf:first ?H), (?H owl:minCardinality ?C), (?H owl:onProperty ?P), 
+	(?L rdf:rest ?T), (?T gloze:bounds interval(?P,?MIN,?MAX)), max(?C,?MIN,?MIN1) 
+	-> (?L gloze:bounds interval(?P,?MIN1,?MAX)) ]
+
+[listMax1: (?L rdf:first ?H), (?H owl:maxCardinality ?C), (?H owl:onProperty ?P), 
+	(?L rdf:rest ?T), (?T gloze:bounds openInterval(?P,?MIN)) 
+	-> (?L gloze:bounds interval(?P,?MIN,?C)) ]
+	
+[listMax2: (?L rdf:first ?H), (?H owl:maxCardinality ?C), (?H owl:onProperty ?P), 
+	(?L rdf:rest ?T), (?T gloze:bounds interval(?P,?MIN,?MAX)), min(?C,?MAX,?MAX1)
+	-> (?L gloze:bounds interval(?P,?MIN,?MAX1)) ]
+
+[listCard1: (?L rdf:first ?H), (?H owl:cardinality ?C), (?H owl:onProperty ?P),  
+	(?L rdf:rest ?T), (?T gloze:bounds openInterval(?P,?MIN)), max(?C,?MIN,?MIN1)
+	-> (?L gloze:bounds interval(?P,?MIN1,?C)) ]
+
+[listCard2: (?L rdf:first ?H), (?H owl:cardinality ?C), (?H owl:onProperty ?P),
+	(?L rdf:rest ?T), (?T gloze:bounds interval(?P,?MIN,?MAX)), max(?C,?MIN,?MIN1), min(?C,MAX,MAX1)
+	-> (?L gloze:bounds interval(?P,?MIN1,?MAX1)) ]
+	
+# an intersection X is a subclass of any of its consituents
+[intersect1: (?X owl:intersectionOf ?I), (?I gloze:bounds openInterval(?P,?MIN)) 
+	-> (?X rdfs:subClassOf min(?P,?MIN)) ]
+
+[intersect2: (?X owl:intersectionOf ?I), (?I gloze:bounds interval(?P,?MIN,?MAX)) 
+	-> (?X rdfs:subClassOf min(?P,?MIN)), (?X rdfs:subClassOf max(?P,?MAX)) ]
+
+# the subclass of an intersection with exactly the cardinality max/min cardinality is non-empty
+[intersect: (?X owl:intersectionOf ?I), (?I gloze:bounds interval(?P,?MIN,?MAX)), makeTemp(?max), makeTemp(?min) 
+	-> (?max rdfs:subClassOf ?X), (?max rdfs:subClassOf min(?P,?MAX)), (?max rdfs:subClassOf max(?P,?MAX)),
+	   (?min rdfs:subClassOf ?X), (?min rdfs:subClassOf min(?P,?MIN)), (?min rdfs:subClassOf max(?P,?MIN)) ]
+
+[intersectOpen: (?X owl:intersectionOf ?I), (?I gloze:bounds openInterval(?P,?MIN)), makeTemp(?Y) 
+	-> (?Y rdfs:subClassOf ?X), (?Y rdfs:subClassOf min(?P,?MIN)), (?Y rdfs:subClassOf max(?P,?MIN)) ]
+
+[rdfs8a:  (?a rdfs:subClassOf ?b), (?b rdfs:subClassOf min(?P,?MIN)) -> (?a rdfs:subClassOf min(?P,?MIN)) ]
+[rdfs8b:  (?a rdfs:subClassOf ?b), (?b rdfs:subClassOf max(?P,?MAX)) -> (?a rdfs:subClassOf max(?P,?MAX)) ]
+
+[violation:  (?C rdfs:subClassOf min(?P, ?MIN)), (?C rdfs:subClassOf max(?P, ?MAX)),
+	greaterThan(?MIN, ?MAX), strConcat('min ',?MIN,' > max ',?MAX,?X) 
+	->  (?C rb:violation error('inconsistent cardinality',?X,?P)) ]
+
+[report:  (?C rb:violation error(?E,?X,?P)) ->  print(?C ?E ?X ?P) ]
+
+
+
+
+
+
+						

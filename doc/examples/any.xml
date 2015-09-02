@@ -1,0 +1,12 @@
+<report xmlns="http://example.org/">
+  <part>foo</part>
+  <part>bar</part>
+  
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:id="html">           
+    <table>
+      <tr><td xml:lang="en">foo</td></tr>
+      <tr><td>bar</td></tr>
+    </table>
+  </html>
+
+</report>

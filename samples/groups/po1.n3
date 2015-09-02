@@ -1,0 +1,50 @@
+@prefix apo:     <http://www.example.com/PO1> .
+@prefix ns1:     <http://example.org#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix po_:     <http://www.example.com/PO1#> .
+@prefix po:      <http://www.example.com/PO1> .
+@prefix apo_:    <http://www.example.com/PO1#> .
+
+<http://example.org/po1>
+      apo_:purchaseOrder
+              [ a       apo_:PurchaseOrderType ;
+                ns1:billTo
+                        [ a       apo_:USAddress ;
+                          ns1:city "Old Town"^^xs_:string ;
+                          ns1:country "US"^^xs_:NMTOKEN ;
+                          ns1:name "Robert Smith"^^xs_:string ;
+                          ns1:state "PA"^^xs_:string ;
+                          ns1:street "8 Oak Avenue"^^xs_:string ;
+                          ns1:zip "95819"^^xs_:decimal
+                        ] ;
+                ns1:items
+                        [ a       apo_:Items ;
+                          ns1:item
+                                  [ ns1:USPrice 148.95 ;
+                                    ns1:partNum "872-AA"^^xs_:string ;
+                                    ns1:productName "Lawnmower"^^xs_:string ;
+                                    ns1:quantity "1"^^xs_:positiveInteger ;
+                                    apo_:comment "Confirm this is electric"^^xs_:string
+                                  ] ;
+                          ns1:item
+                                  [ ns1:USPrice 39.98 ;
+                                    ns1:partNum "926-AA"^^xs_:string ;
+                                    ns1:productName "Baby Monitor"^^xs_:string ;
+                                    ns1:quantity "1"^^xs_:positiveInteger ;
+                                    ns1:shipDate "1999-05-21"^^xs_:date
+                                  ]
+                        ] ;
+                ns1:orderDate "1999-10-20"^^xs_:date ;
+                ns1:shipTo
+                        [ a       apo_:USAddress ;
+                          ns1:city "Mill Valley"^^xs_:string ;
+                          ns1:country "US"^^xs_:NMTOKEN ;
+                          ns1:name "Alice Smith"^^xs_:string ;
+                          ns1:state "CA"^^xs_:string ;
+                          ns1:street "123 Maple Street"^^xs_:string ;
+                          ns1:zip "90952"^^xs_:decimal
+                        ] ;
+                apo_:comment "Hurry, my lawn is going wild"^^xs_:string
+              ] .

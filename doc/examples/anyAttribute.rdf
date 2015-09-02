@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns1="http://example.org/def/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns2="http://example.org/"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#">
+  <rdf:Description rdf:about="">
+    <ns2:report rdf:parseType="Resource">
+      <ns2:part rdf:parseType="Resource">
+        <rdf:value xml:lang="en">bar</rdf:value>
+      </ns2:part>
+      <ns2:part>
+        <rdf:Description rdf:ID="foo">
+          <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >foo</rdf:value>
+        </rdf:Description>
+      </ns2:part>
+    </ns2:report>
+  </rdf:Description>
+</rdf:RDF>

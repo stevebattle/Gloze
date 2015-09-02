@@ -1,0 +1,136 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1:     <http://example.org#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+ns1:character
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:name
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:born
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:qualification
+                        ]
+              ] .
+
+ns1:qualification
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+ns1:book
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:available
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:title
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:isbn
+                        ]
+              ] .
+
+ns1:lang
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:language .
+
+<http://example.org/library>
+      a       owl:Ontology .
+
+rdf:value
+      a       rdf:Property , owl:DatatypeProperty .
+
+ns1:name
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+ns1:born
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:date .
+
+ns1:title
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:lang
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:allValuesFrom xsd:string ;
+                          owl:onProperty rdf:value
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty rdf:value
+                        ]
+              ] .
+
+ns1:author
+      a       rdf:Property , owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:maxCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:dead
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:born
+                        ] ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:cardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:name
+                        ]
+              ] .
+
+ns1:dead
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:date .
+
+ns1:available
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:boolean .
+
+ns1:library
+      a       owl:ObjectProperty ;
+      rdfs:range
+              [ a       owl:Class ;
+                rdfs:subClassOf
+                        [ a       owl:Restriction ;
+                          owl:minCardinality "1"^^xsd:int ;
+                          owl:onProperty ns1:book
+                        ]
+              ] .
+
+ns1:isbn
+      a       rdf:Property , owl:DatatypeProperty ;
+      rdfs:range xsd:integer .

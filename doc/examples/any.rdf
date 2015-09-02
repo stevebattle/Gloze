@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns1="http://example.org/def/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:j.0="http://www.w3.org/1999/xhtml#"
+    xmlns:ns2="http://example.org/"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#">
+  <rdf:Description rdf:about="">
+    <ns2:report rdf:parseType="Resource">
+      <j.0:html>
+        <rdf:Seq rdf:ID="html">
+          <rdf:li>
+            <rdf:Statement>
+              <rdf:subject rdf:resource="#html"/>
+              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#table"/>
+              <rdf:object>
+                <rdf:Seq rdf:nodeID="A0">
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A0"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A1">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A1"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>
+                                <rdf:Description rdf:nodeID="A2">
+                                  <rdf:value xml:lang="en">foo</rdf:value>
+                                </rdf:Description>
+                              </rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <j.0:td rdf:nodeID="A2"/>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <rdf:li>
+                    <rdf:Statement>
+                      <rdf:subject rdf:nodeID="A0"/>
+                      <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#tr"/>
+                      <rdf:object>
+                        <rdf:Seq rdf:nodeID="A3">
+                          <rdf:li>
+                            <rdf:Statement>
+                              <rdf:subject rdf:nodeID="A3"/>
+                              <rdf:predicate rdf:resource="http://www.w3.org/1999/xhtml#td"/>
+                              <rdf:object>bar</rdf:object>
+                            </rdf:Statement>
+                          </rdf:li>
+                          <j.0:td>bar</j.0:td>
+                        </rdf:Seq>
+                      </rdf:object>
+                    </rdf:Statement>
+                  </rdf:li>
+                  <j.0:tr rdf:nodeID="A3"/>
+                  <j.0:tr rdf:nodeID="A1"/>
+                </rdf:Seq>
+              </rdf:object>
+            </rdf:Statement>
+          </rdf:li>
+          <j.0:table rdf:nodeID="A0"/>
+        </rdf:Seq>
+      </j.0:html>
+      <ns2:part rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >bar</ns2:part>
+      <ns2:part rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >foo</ns2:part>
+    </ns2:report>
+  </rdf:Description>
+</rdf:RDF>

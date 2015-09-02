@@ -1,0 +1,58 @@
+The XML schema instance namespace defines xsi:type allowing elements be be explicitly annotated with type information. This can be used as an alternative mechanism to substitution groups, but also provides a way to jump back into a schema from within xs:any content. An example of this is shown below using an XML document that has no schema.
+
+The document element 'myLink' is not defined in the schema, so is processed as if it were subject to xs:any and a default no-\/schema mapping is employed. This unidentified element is treated as unqualified and is defined in the default namespace set by the xmlns parameter.
+
+The link schema doesn't define the 'myLink' element, but it does define the 'SimpleLink' content. The XML instance refers to this using an xsi:type attribute. The RDF mapping for this generates a corresponding rdf:type statement. The content of 'myLink' is then processed according to the content model of 'SimpleLink', so we have escaped from the xs:any no-\/schema mapping.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<myLink xmlns:eg="http://example.org/" xmlns:xlink="http://www.w3.org/1999/xlink"
+      
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eg:Simple
+      Link"
+        xlink:href="foo.xml" />
+
+\end{DoxyCodeInclude}
+ 
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://example.org/" xmlns:xlink="http://www.w3.org/1999
+      /xlink">
+        <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink
+      .xsd" />
+
+        <xs:complexType name="SimpleLink">
+                <xs:attributeGroup ref="xlink:simpleLink"/>
+        </xs:complexType>
+
+</xs:schema>
+\end{DoxyCodeInclude}
+
+
+The use of the 'SimpleLink' content model is evidenced by the correct datatyping of the xlink:href and the insertion of the xlink:type implied by the xlink attribute group.
+
+
+\begin{DoxyCodeInclude}
+@prefix ns2:     <http://example.org/> .
+@prefix ns1:     <http://example.org/def/> .
+@prefix eg:      <http://example.org/> .
+@prefix xlink_:  <http://www.w3.org/1999/xlink#> .
+@prefix xs_:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix xlink:   <http://www.w3.org/1999/xlink> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs:      <http://www.w3.org/2001/XMLSchema> .
+
+<http://example.org/linkType.xml>
+      ns1:myLink
+              [ a       ns2:SimpleLink ;
+                xlink_:href "http://example.org/foo.xml"^^xs_:anyURI ;
+                xlink_:type "simple"^^xs_:string
+              ] .
+\end{DoxyCodeInclude}
+
+
+\begin{DoxySeeAlso}{See also}
+\href{http://www.w3.org/2001/XMLSchema-instance}{\tt http://www.w3.org/2001/XMLSchema-\/instance} 
+\end{DoxySeeAlso}

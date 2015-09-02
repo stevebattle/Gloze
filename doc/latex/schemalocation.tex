@@ -1,0 +1,16 @@
+The XML Schema Instance namespace defines two attributes that declare schema location hints that can be used by an XML processor to locate the schema.
+
+\hyperlink{classcom_1_1hp_1_1gloze_1_1_gloze}{Gloze} may be be supplied with user-\/defined namespace/schema-\/location hints (from the command line or through the API), or it looks for xsi:schemaLocation or xsi:noNamespaceSchemaLocation on the document element.
+
+The following simple XML may be lifted into RDF either by supplying the schema location on the command line (eg. \char`\"{}schemaLocation.xml http://example.org/ mySchema.xsd\char`\"{}), or as shown in this case, using an explicit xsi:schemaLocation. Note that the xsi namespace must be declared.
+
+
+\begin{DoxyCodeInclude}
+<?xml version="1.0" encoding="UTF-8"?>
+<foobar xmlns="http://example.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-i
+      nstance" 
+xsi:schemaLocation="http://example.org/ mySchema.xsd" />
+\end{DoxyCodeInclude}
+
+
+When dropping a document into XML, a schema location can be added by supplying the full (base) path of the schema using the schemaLocation parameter (e.g. \char`\"{}-\/Dgloze.schemaLocation=file:/C:/myExamples/mySchema.xsd\char`\"{} ). The schema used in the mapping are relativized against this base and added to the xsi:schemaLocation or xsi:noNamespaceSchemaLocation attribute on the document element. 

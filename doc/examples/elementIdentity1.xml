@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<identity xmlns="http://example.org/">
+	<foo>foobar</foo>
+	<bar>foobar</bar>
+</identity>

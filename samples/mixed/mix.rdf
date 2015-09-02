@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd_="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ns1="http://example.org#">
+  <rdf:Description rdf:about="">
+    <ns1:letterBody>
+      <rdf:Seq rdf:nodeID="A0">
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+            <rdf:object>
+</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://example.org#salutation"/>
+            <rdf:object>
+              <rdf:Seq rdf:nodeID="A1">
+                <rdf:li>
+                  <rdf:Statement>
+                    <rdf:subject rdf:nodeID="A1"/>
+                    <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+                    <rdf:object>Dear Mr.</rdf:object>
+                  </rdf:Statement>
+                </rdf:li>
+                <rdf:li>
+                  <rdf:Statement>
+                    <rdf:subject rdf:nodeID="A1"/>
+                    <rdf:predicate rdf:resource="http://example.org#name"/>
+                    <rdf:object rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Robert Smith</rdf:object>
+                  </rdf:Statement>
+                </rdf:li>
+                <rdf:li>
+                  <rdf:Statement>
+                    <rdf:subject rdf:nodeID="A1"/>
+                    <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+                    <rdf:object>.</rdf:object>
+                  </rdf:Statement>
+                </rdf:li>
+                <rdf:value>.</rdf:value>
+                <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Robert Smith</ns1:name>
+                <rdf:value>Dear Mr.</rdf:value>
+              </rdf:Seq>
+            </rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+            <rdf:object>
+Your order of </rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://example.org#quantity"/>
+            <rdf:object rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+            >1</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+            <rdf:object> </rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://example.org#productName"/>
+            <rdf:object rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Baby
+Monitor</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+            <rdf:object> shipped from our warehouse on
+</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://example.org#shipDate"/>
+            <rdf:object rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >1999-05-21</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:li>
+          <rdf:Statement>
+            <rdf:subject rdf:nodeID="A0"/>
+            <rdf:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+            <rdf:object>.
+</rdf:object>
+          </rdf:Statement>
+        </rdf:li>
+        <rdf:value>
+</rdf:value>
+        <rdf:value> shipped from our warehouse on
+</rdf:value>
+        <rdf:value>.
+</rdf:value>
+        <ns1:shipDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >1999-05-21</ns1:shipDate>
+        <rdf:value>
+Your order of </rdf:value>
+        <ns1:salutation rdf:nodeID="A1"/>
+        <rdf:value> </rdf:value>
+        <ns1:productName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Baby
+Monitor</ns1:productName>
+        <ns1:quantity rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"
+        >1</ns1:quantity>
+      </rdf:Seq>
+    </ns1:letterBody>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns1="http://example.org/library/schema#"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xs_="http://www.w3.org/2001/XMLSchema#">
+  <rdf:Description rdf:about="">
+    <ns1:library rdf:parseType="Resource">
+      <ns1:book>
+        <rdf:Description rdf:ID="b0836217462">
+          <ns1:character>
+            <rdf:Description rdf:ID="Lucy">
+              <ns1:qualification rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        bossy, crabby and selfish
+      </ns1:qualification>
+              <ns1:born rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1952-03-03</ns1:born>
+              <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        Lucy
+      </ns1:name>
+            </rdf:Description>
+          </ns1:character>
+          <ns1:character>
+            <rdf:Description rdf:ID="Schroeder">
+              <ns1:qualification rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        brought classical music to the Peanuts strip
+      </ns1:qualification>
+              <ns1:born rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1951-05-30</ns1:born>
+              <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        Schroeder
+      </ns1:name>
+            </rdf:Description>
+          </ns1:character>
+          <ns1:character>
+            <rdf:Description rdf:ID="Snoopy">
+              <ns1:qualification rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        extroverted beagle
+      </ns1:qualification>
+              <ns1:born rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1950-10-04</ns1:born>
+              <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        Snoopy
+      </ns1:name>
+            </rdf:Description>
+          </ns1:character>
+          <ns1:character>
+            <rdf:Description rdf:ID="PP">
+              <ns1:qualification rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        bold, brash and tomboyish
+      </ns1:qualification>
+              <ns1:born rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1966-08-22</ns1:born>
+              <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        Peppermint Patty
+      </ns1:name>
+            </rdf:Description>
+          </ns1:character>
+          <ns1:author>
+            <rdf:Description rdf:ID="CMS">
+              <ns1:dead rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >2000-02-12</ns1:dead>
+              <ns1:born rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >1922-11-26</ns1:born>
+              <ns1:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >
+        Charles M Schulz
+      </ns1:name>
+            </rdf:Description>
+          </ns1:author>
+          <ns1:title rdf:parseType="Resource">
+            <ns1:lang rdf:datatype="http://www.w3.org/2001/XMLSchema#language"
+            >en</ns1:lang>
+            <rdf:value rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >
+      Being a Dog Is a Full-Time Job
+    </rdf:value>
+          </ns1:title>
+          <ns1:isbn rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+          >0836217462</ns1:isbn>
+          <ns1:available rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+          >true</ns1:available>
+        </rdf:Description>
+      </ns1:book>
+    </ns1:library>
+  </rdf:Description>
+</rdf:RDF>
