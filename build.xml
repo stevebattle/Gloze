@@ -1,0 +1,573 @@
+<project name="Gloze" default="main" basedir=".">
+
+  <!-- Configuration properties -->
+
+  <property name="Name"            value="Gloze"/>
+  <property name="name"            value="gloze"/>
+	
+  <!-- Release version labels -->
+  <property name="version-major"   value="1"/>
+  <property name="version-minor"   value="1"/>
+  <!-- e.g. -beta1, or empty string for stable releases -->
+  <property name="version-status"  value=""/>
+
+  <property name="version"         value="${version-major}.${version-minor}${version-status}"/>
+
+  <!-- Output file names and locations -->
+  <property name="dist.name"       value="${Name}-${version}"/>
+  <property name="dist.zip.name"   value="${Name}-${version}.zip"/>
+  <property name="web.site"        value="http://jena.sourceforge.net/" />
+  <property name="jarfile"         value="${name}.jar"/>
+
+  <!-- Source code locations -->
+  <property name="src"         	   value="src"/>
+  <property name="src.dir"         value="src/java"/>
+  <property name="src.info.dir"    value="src/beanInfo"/>
+  <property name="src.test.dir"    value="test/src"/>
+  <property name="build.dir" value="build"/>
+  <property name="bldsrc.dir"      value="build/src"/>
+  <property name="classes.dir"     value="build/classes"/>
+  <property name="dist.root"       value="build/dist"/>
+  <property name="dist.dir"        value="${dist.root}/${dist.name}"/>
+  <property name="dist.src"        value="${dist.dir}/src"/>
+  <property name="dist.test"       value="${dist.dir}/test"/>
+  <property name="lib.dir"         value="lib-tmp"/>
+  <property name="doc.dir"         value="doc"/>
+  <property name="samples.dir"     value="samples"/>
+  <property name="test.dir"        value="test"/>
+  <property name="tmp" location="tmp" />
+  <property name="lib-extra.dir"   value="lib"/>
+  <property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" />
+
+	<!-- Classpaths -->
+	
+	<path id="classpath.compilation">
+		<fileset dir="${lib.dir}" includes="*.jar" excludes="${jarfile}"/>
+		<fileset dir="${lib-extra.dir}" includes="*.jar"/>
+	</path>
+
+	<path id="classpath.runtime">
+		<pathelement location="${classes.dir}"/>
+		<fileset dir="${lib.dir}" includes="*.jar" />
+		<fileset dir="${lib-extra.dir}" includes="*.jar"/>
+	</path>
+
+  <!-- keyword substitutions -->
+  <filterset id="filters.shared">
+    <filter token="Name"          value="${Name}" />
+    <filter token="website"       value="${web.site}" />
+    <filter token="version-major" value="${version-major}" />
+    <filter token="version-minor" value="${version-minor}" />
+    <filter token="version-status" value="${version-status}" />
+    <filter token="version"       value="${version}" />
+  </filterset>
+
+  <!-- Primary externally visible targets -->
+
+  <target name="main" depends="compile,jar,package"
+    description="Copy and compile source, jar classes, and package up"/>
+
+  <!-- Source code preparation targets -->
+	
+	<target name="init">
+		<available file="${lib.dir}" property="lib.present" />
+	</target>
+	
+	<target name="dependencies" depends="init" unless="lib.present">
+		<mkdir dir="${tmp}" />
+		<mkdir dir="${lib.dir}" />
+		<get src="${jena.url}" dest="${tmp}/jena.zip" skipexisting="true" />
+		<unzip src="${tmp}/jena.zip" dest="${lib.dir}">
+			<patternset includes="**/lib/*.jar" />
+			<mapper type="flatten" />
+		</unzip>
+	</target>
+	
+  <target name="clean"
+    description="Remove all contents from ${classes.dir} to ensure a clean build">
+    <delete dir="${classes.dir}"/>
+    <delete dir="${lib.dir}"/>
+    <delete dir="${build.dir}"/>
+  </target>
+
+  <target name="copy-source"
+    description="Create a copy of the source tree in the build directory, and apply source code filters">
+    <mkdir dir="${build.dir}"/>
+    <mkdir  dir="${bldsrc.dir}"/>
+    <tstamp>
+      <format property="BUILD_TIME" pattern="d-MMMM-yyyy HH:mm"/>
+    </tstamp>
+    <copy todir="${bldsrc.dir}" >
+      <fileset dir="${src.dir}" excludes="**/CVS"/>
+      <fileset dir="${src.info.dir}" excludes="**/CVS"/>
+      <fileset dir="${src.test.dir}" excludes="**/CVS"/>
+      <filterset>
+        <filterset refid="filters.shared" />
+        <filter token="build-time" value="${BUILD_TIME}" />
+      </filterset>
+    </copy>
+  </target>
+
+  <!-- Primary Java build targets -->
+
+  <target name="compile" depends="clean,dependencies,copy-source,javac-flags"
+    description="Compile the copied source tree into class files under ${classes.dir}">
+    <mkdir dir="${classes.dir}"/>
+    <javac
+       srcdir="${bldsrc.dir}"
+       destdir="${classes.dir}"
+       debug="${java.debug}"
+       debuglevel="${java.debuglevel}"
+       deprecation="${java.deprecation}"
+       optimize="${java.optimize}"
+       source="${java.source}"
+       target="${java.target}">
+      <classpath refid="classpath.compilation" />
+    </javac>
+    <copy todir="${classes.dir}" >
+      <fileset dir="${src.dir}" includes="com/hp/gloze/owl.rules"/>
+    </copy>
+    <copy todir="${classes.dir}" >
+      <fileset dir="${src.test.dir}">
+        <include name="com/hp/gloze/test/*.rules"/>
+        <include name="com/hp/gloze/test/*.props"/>
+        <include name="com/hp/gloze/test/xsts2004/*.txt"/>
+      </fileset>
+    </copy>
+    <copy todir="${classes.dir}">
+	  <fileset dir="${src.dir}" includes="*.properties" />
+  	</copy>
+  </target>
+
+  <target name="jar" depends="compile"
+    description="Create jar file from the contents of the classes dir">
+    <jar jarfile="${build.dir}/${jarfile}" index="yes">
+      <fileset dir="${classes.dir}" />
+    </jar>
+  </target>
+  
+  <target name="build" depends="compile, jar"
+    description="compile and jar code for running">
+  </target>
+
+  <target name="javac-flags"
+    description="Set the javac flags that will produce an debug jar with no compiler optimisation and all debug symbols" >
+    <property name="java.debug"       value="true"/>
+    <property name="java.debuglevel"  value="source,lines"/>
+    <property name="java.deprecation" value="false"/>
+    <property name="java.optimize"    value="true"/>
+    <property name="java.source"      value="1.5"/>
+    <property name="java.target"      value="1.5"/>
+  </target>
+
+  <!-- Creating a distribution -->
+
+  <target name="package" depends="copy-dist,zip-dist"
+      description="Aggregate task to perform the steps of creating a distribution"/>
+
+  <target name="clean-dist"
+    description="Clean the distribution directory prior to creating the dist">
+    <delete dir="${dist.root}" quiet="true"/>
+    <mkdir dir="${dist.dir}" />
+    <mkdir dir="${dist.dir}"/>
+  </target>
+
+  <!--target name="copy-dist" depends="jar,clean-dist,docs,samples"-->
+
+  <target name="copy-dist" depends="jar,clean-dist,samples"
+    description="Copy the various elements of a distribution into one directory tree">
+    <copy todir="${dist.dir}/${lib.dir}">
+      	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <fileset dir="${build.dir}" includes="**/*.jar"/>
+    </copy>
+    <copy todir="${dist.src}">
+      <fileset dir="${src}" includes="**"/>
+    </copy>
+    <copy todir="${dist.test}">
+      <fileset dir="${test.dir}" includes="**">
+      	<exclude name="**/xsts/**" />
+      	<exclude name="xsts.zip" />
+      </fileset>
+    </copy>
+    <copy todir="${dist.dir}" file="build.xml"/>
+    <copy todir="${dist.dir}" file="build-test.xml"/>
+    <copy todir="${dist.dir}" file="build-docs.xml"/>
+    <copy todir="${dist.dir}" file="copyright.txt"/>
+    <copy todir="${dist.dir}" file="readme.txt"/>
+    <copy todir="${dist.dir}" file="Doxyfile"/>
+    <copy todir="${dist.dir}" file="copyright.bat"/>
+    <copy todir="${dist.dir}/${doc.dir}">
+      <fileset dir="${doc.dir}">
+        <include name="**"/>
+      </fileset>
+     </copy>
+    <copy todir="${dist.dir}/${samples.dir}">
+      <fileset dir="${samples.dir}" includes="**"/>
+    </copy>
+  </target>
+
+  <target name="zip-dist"
+    description="Create a zip file of everything in the distribution directory">
+    <zip zipfile="${dist.root}/${dist.zip.name}">
+      <fileset dir="${dist.root}" includes="${dist.name}/**"/>
+    </zip>
+  </target>
+
+	
+	<!-- Samples -->
+
+	<target name="samples-xml2rdf" description="samples from the XML Schema Primer">
+		<!-- any: htmlExample in report.xsd may contain any content and anyAttribute --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- the base is the root node of the lifted RDF (base of the XML document) -->
+			<jvmarg value="-Dgloze.base=http://example.org/4Q99.xml" />
+			<!-- the location to write 4Q99.rdf -->			<jvmarg value="-Dgloze.target=${samples.dir}/any" />
+			<!-- the rows in the htmlExample are ordered -->
+			<jvmarg value="-Dgloze.order=seq" />
+			<!-- the XML source to lift -->
+			<arg value="${samples.dir}/any/4Q99.xml" />
+			<!-- 1st namespace/schema location pair -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/any/ipo.xsd" />
+			<!-- 2nd namespace/schema location pair -->
+			<arg value="http://www.example.com/Report" />
+			<arg value="${samples.dir}/any/report.xsd" />
+		</java>		
+		<!-- attribute groups: ItemDelivery in po.xsd --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/po" />
+			<!-- location to write po.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/attributeGroups" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/attributeGroups/po.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://tempuri.org/po.xsd" />
+			<arg value="${samples.dir}/attributeGroups/po.xsd" />
+		</java>		
+		<!-- empty element internationalPrice with attributes but no content --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/empty" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org" />
+			<!-- location to write empty.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/empty" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/empty/empty.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/empty/empty.xsd" />
+		</java>		
+		<!-- groups: po1.xsd defines a shipAndBill group (within a choice group)--> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/po1" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write po1.n3 -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/groups" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/groups/po1.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://www.example.com/PO1" />
+			<arg value="${samples.dir}/groups/po1.xsd" />
+		</java>
+		<!-- groups: po2.xsd defines an all group (within PurchaseOrderType) -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/po1" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write po1.n3 -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/groups" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/groups/po1.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://www.example.com/PO1" />
+			<arg value="${samples.dir}/groups/po2.xsd" />
+		</java>		
+		<!-- ipo: The International Purchase Order with explicit xsi:type -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/ipo" />
+			<!-- location to write ipo.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/ipo" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/ipo/ipo.xml" />
+			<!-- namespace/schema location pair (address.xsd is included) -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/ipo/ipo.xsd" />
+		</java>		
+		<!-- library: Our first schema from http://examples.oreilly.com/xmlschema/ -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org/library/schema" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/library" />
+			<!-- location to write library.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/library" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/library/library.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/library/library.xsd" />
+		</java>		
+		<!-- lists: list type for six US states -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/6states" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write 6States.n3 -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/lists" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/lists/6States.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/lists/lists.xsd" />
+		</java>		
+		<!-- lists: union type for zip codes -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/zips" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write zips.n3 -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/lists" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/lists/zips.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/lists/lists.xsd" />
+		</java>		
+		<!-- mixed content -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/mix" />
+			<!-- location to write mix.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/mixed" />
+			<!-- record relative order of text content and markup -->
+			<jvmarg value="-Dgloze.order=seq" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/mixed/mix.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/mixed/mix.xsd" />
+		</java>		
+		<!-- namespaces: Purchase Order schema with target namespace -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/po1" />
+			<!-- location to write po1.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/namespaces" />
+			<!-- record relative order of text content and markup -->
+			<jvmarg value="-Dgloze.order=seq" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/namespaces/po1.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://www.example.com/PO1" />
+			<arg value="${samples.dir}/namespaces/po1.xsd" />
+		</java>		
+		<!-- nil values: nillable elements and xsi:nil -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- xmlns for locally defined elements and attributes -->
+			<jvmarg value="-Dgloze.xmlns=http://example.org" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/nil" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write nil.n3 -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/nil" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/nil/nil.xml" />
+			<!-- no namespace schema location -->
+			<arg value="${samples.dir}/nil/nil.xsd" />
+		</java>		
+		<!-- po: The Purchase Order -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/po" />
+			<!-- location to write po.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/po" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/po/po.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://tempuri.org/po.xsd" />
+			<arg value="${samples.dir}/po/po.xsd" />
+		</java>		
+		<!-- redefine: redefining types and groups (Address is redefined) -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/redefine" />
+			<!-- location to write ipo.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/redefine" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/redefine/ipo.xml" />
+			<!-- namespace/schema location pair (address.xsd is redefined) -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/redefine/ipo.xsd" />
+		</java>		
+		<!-- report: The Quarterly report -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/4Q99" />
+			<!-- location to write 4Q99.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/report" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/report/4Q99.xml" />
+			<!-- 1st namespace/schema location pair -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/report/ipo.xsd" />
+			<!-- 2nd namespace/schema location pair -->
+			<arg value="http://www.example.com/Report" />
+			<arg value="${samples.dir}/report/report.xsd" />
+		</java>		
+		<!-- substitution groups: shipComment and customerComment substitute for comment -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the XML document and RDF root node -->
+			<jvmarg value="-Dgloze.base=http://example.org/ipo" />
+			<!-- location to write substitution.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/substitution" />
+			<!-- location of the source XML document -->
+			<arg value="${samples.dir}/substitution/substitution.xml" />
+			<!-- namespace/schema location pair -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/substitution/ipo.xsd" />
+		</java>		
+	</target>
+	
+	<target name="samples-xsd2owl">
+		<!-- any --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- the base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/ipo" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- the location to write ipo.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/any" />
+			<!-- the XSD source to lift -->
+			<arg value="${samples.dir}/any/ipo.xsd" />
+		</java>		
+		<!-- attribute groups --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/po" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write po.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/attributeGroups" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/attributeGroups/po.xsd" />
+		</java>	
+		<!-- empty --> 
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write empty.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/empty" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/empty/empty.xsd" />
+		</java>		
+		<!-- groups: po1.xsd -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/po1" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write po1.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/groups" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/groups/po1.xsd" />
+		</java>		
+		<!-- groups: po2.xsd -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/po2" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write po2.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/groups" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/groups/po2.xsd" />
+		</java>
+		<!-- ipo -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/ipo" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write ipo.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/ipo" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/ipo/ipo.xsd" />
+		</java>		
+		<!-- library -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/library" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write library.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/library" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/library/library.xsd" />
+		</java>		
+		<!-- report -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/report" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write report.owl -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/report" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/report/report.xsd" />
+			<!-- additional namespace/schema location pair -->
+			<arg value="http://www.example.com/IPO" />
+			<arg value="${samples.dir}/report/ipo.xsd" />
+		</java>		
+		<!-- substitution -->
+		<java classname="com.hp.gloze.Gloze" fork="true" failonerror="true">
+			<classpath refid="classpath.runtime" />
+			<!-- base of the ontology -->
+			<jvmarg value="-Dgloze.base=http://example.org/substitution" />
+			<!-- use N3 -->
+			<jvmarg value="-Dgloze.lang=N3" />
+			<!-- location to write substitution.rdf -->
+			<jvmarg value="-Dgloze.target=${samples.dir}/substitution" />
+			<!-- location of the source XSD document -->
+			<arg value="${samples.dir}/substitution/ipo.xsd" />
+		</java>		
+	</target>
+	
+	<target name="samples" depends="samples-xml2rdf, samples-xsd2owl" />
+	
+</project>
