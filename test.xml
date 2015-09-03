@@ -1,0 +1,120 @@
+<project name="Gloze" default="test-all" basedir=".">
+	
+  <!-- Source code locations -->
+	
+  <property name="classes.dir" value="build/classes"/>
+  <property name="lib.dir" value="lib"/>
+  <property name="test.dir" value="test"/>
+  <property name="xsts.dir" value="${test.dir}/xsts"/>
+  <property name="tmp" location="tmp" />
+  <property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" />
+  <property name="lib-include.dir"   value="lib-include"/>
+
+    <target name="test-all" depends="test, test-samples, test-xsts"
+    description="Run standard unit tests and the XML schema test set"/>	
+	
+	<target name="init">
+		<available file="${lib.dir}" property="lib.present" />
+		<available file="${xsts.dir}" property="xsts.present" />
+	</target>
+	
+	<target name="dependencies" depends="init" unless="lib.present">
+		<mkdir dir="${tmp}" />
+		<mkdir dir="${lib.dir}" />
+		<parallel>
+			<get src="${jena.url}" dest="${tmp}/jena.zip" skipexisting="true" />
+			<get src="${junit.url}" dest="${lib.dir}/junit.jar" skipexisting="true" />
+		</parallel>
+		<unzip src="${tmp}/jena.zip" dest="${lib.dir}">
+			<patternset includes="**/lib/*.jar" />
+			<mapper type="flatten" />
+		</unzip>
+	</target>
+
+	<!-- Unit tests -->
+
+	<target name="clean-test"
+	    description="Remove redundant test output">
+	    <delete dir="${test.dir}/rdf"/>
+	    <delete dir="${test.dir}/owl"/>
+	    <delete dir="${lib.dir}"/>
+	</target>
+
+	<path id ="test.classpath">
+		<pathelement location="${classes.dir}"/>
+		<fileset dir="${lib.dir}" includes="*.jar" />
+		<fileset dir="${lib-include.dir}" includes="*.jar" />
+		<pathelement location="${junit.jar}" />
+	</path>
+	
+	<target name="test-lift" depends="dependencies">
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.TestLift"/>
+		</junit>
+	</target>
+
+	<target name="test-owl" depends="dependencies" >
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.TestOWL"/>
+		</junit>
+	</target>
+
+	<target name="test-samples"  depends="dependencies">
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.TestSamples"/>
+		</junit>
+	</target>
+	
+	<target name="test" depends="test-lift, test-owl" />
+
+	<!--
+		These tests are designed to run against the XML Schema Test Suite:
+		<http://www.w3.org/XML/2004/xml-schema-test-suite/index.html>
+
+		The full XML Schema Test Suite set may be viewed at :
+		<http://dev.w3.org/cvsweb/XML/xml-schema-test-suite/2004-01-14/xmlschema2004-01-14/Tests/>
+
+		Open the CVS (pserver) repository at dev.w3.org with username/password anonymous/anonymous, and path /sources/public :
+		ie. :pserver:anonymous@dev.w3.org:/sources/public
+
+		Checkout the following folder (Check Out As...) to existing project 'test' folder.
+		HEAD/XML/xml-schema-test-suite/2004-01-14/xmlschema2004-01-14 
+	-->
+
+			
+	<target name="clean">
+	    <delete dir="${xsts.dir}"/>
+	</target>
+		
+	<target name="init-xsts" depends="init" unless="xsts.present">
+		<mkdir dir="${xsts.dir}" />
+		<cvs cvsRoot=":pserver:anonymous:anonymous@dev.w3.org:/sources/public" package="XML" dest="${xsts.dir}" />
+	</target>
+
+	<target name="test-atomic"  depends="dependencies">
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.xsts2004.TestAtomic"/>
+		</junit>
+	</target>
+
+	<target name="test-list"  depends="dependencies">
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.xsts2004.TestList"/>
+		</junit>
+	</target>
+
+	<target name="test-union"  depends="dependencies">
+		<junit fork="yes" printsummary="on">
+			<classpath refid="test.classpath" />
+			<test name="com.hp.gloze.test.xsts2004.TestUnion"/>
+		</junit>
+	</target>
+
+	<target name="test-xsts" depends="init-xsts, test-atomic, test-list, test-union" />
+		
+</project>
