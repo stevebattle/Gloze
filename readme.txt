@@ -1,4 +1,4 @@
-README
+outdated README !!!
 
 Gloze requires java 5.0, and jena-2.5 from <http://jena.sourceforge.net/>.
 

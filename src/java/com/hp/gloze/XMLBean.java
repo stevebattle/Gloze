@@ -375,6 +375,13 @@ public abstract class XMLBean {
 						if (l.getLanguage()!=null) elem.setAttributeNS(XML,"lang",l.getLanguage());
 					}
 				}
+				else if (stmt.getObject().isResource() ) {
+					Element e = noSchemaToElement(elem,stmt.getPredicate(),ctx);
+					if (e!=null) {
+						elem.appendChild(e);
+						noSchemaToXML(e,stmt.getObject(),qualify,ctx);
+					}
+				}
 				else if (stmt.getPredicate().getNameSpace().equals(RDF.getURI())) ;
 				else {
 					Attr a = noSchemaToAttribute(doc,stmt.getPredicate(), ctx);

@@ -37,7 +37,8 @@
   <property name="test.dir"        value="test"/>
   <property name="tmp" location="tmp" />
   <property name="lib-extra.dir"   value="lib"/>
-  <property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" />
+  <!--property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" /-->
+  <property name="jena.url" value="https://www.apache.org/dist/jena/binaries/apache-jena-3.0.1.zip" />
 
 	<!-- Classpaths -->
 	
