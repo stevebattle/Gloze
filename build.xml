@@ -37,8 +37,10 @@
   <property name="test.dir"        value="test"/>
   <property name="tmp" location="tmp" />
   <property name="lib-extra.dir"   value="lib"/>
-  <!--property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" /-->
+  <!--property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" /
   <property name="jena.url" value="https://www.apache.org/dist/jena/binaries/apache-jena-3.0.1.zip" />
+  -->
+  <property name="jena.url" value="https://www.apache.org/dist/jena/binaries/apache-jena-3.1.0.zip" />
 
 	<!-- Classpaths -->
 	
@@ -95,6 +97,7 @@
     description="Create a copy of the source tree in the build directory, and apply source code filters">
     <mkdir dir="${build.dir}"/>
     <mkdir  dir="${bldsrc.dir}"/>
+    <mkdir  dir="${src.test.dir}"/>
     <tstamp>
       <format property="BUILD_TIME" pattern="d-MMMM-yyyy HH:mm"/>
     </tstamp>
