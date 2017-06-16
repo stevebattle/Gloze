@@ -7,7 +7,7 @@
   <property name="test.dir" value="test"/>
   <property name="xsts.dir" value="${test.dir}/xsts"/>
   <property name="tmp" location="tmp" />
-  <property name="jena.url" value="http://mirror.vorboss.net/apache/jena/binaries/apache-jena-3.0.0.zip" />
+  <property name="jena.url" value="https://www.apache.org/dist/jena/binaries/apache-jena-3.0.1.zip" />
   <property name="lib-include.dir"   value="lib-include"/>
 
     <target name="test-all" depends="test, test-samples, test-xsts"
